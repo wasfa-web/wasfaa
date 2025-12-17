@@ -2,7 +2,8 @@ let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 
 function addRecipe() {
     const name = document.getElementById("recipeName").value.trim();
-    const ingredients = document.getElementById("recipeIngredients").value.trim().split(",");
+    const ingredients = document.getElementById("recipeIngredients").value
+                        .trim().split(",").map(i => i.trim());
     const category = document.getElementById("recipeCategory").value;
 
     if (!name || ingredients.length === 0) {
