@@ -14,7 +14,7 @@ function saveTitle() {
 
 /* الثيم */
 const themeSelector = document.getElementById("themeSelector");
-const savedTheme = localStorage.getItem("theme") || "signature";
+const savedTheme = localStorage.getItem("theme") || "cyan";
 document.documentElement.setAttribute("data-theme", savedTheme);
 themeSelector.value = savedTheme;
 
@@ -23,7 +23,7 @@ themeSelector.onchange = () => {
   localStorage.setItem("theme", themeSelector.value);
 };
 
-/* اقتراحات */
+/* اقتراحات المكونات */
 function updateIngredientSuggestions() {
   ingredientsList.innerHTML = "";
   [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
@@ -33,7 +33,7 @@ function updateIngredientSuggestions() {
   });
 }
 
-/* إضافة */
+/* إضافة وصفة */
 function addRecipe() {
   const name = recipeName.value.trim();
   const ingredients = recipeIngredients.value
@@ -41,7 +41,6 @@ function addRecipe() {
     .replace(/[,،]/g, " ")
     .split(/\s+/)
     .filter(Boolean);
-
   const meal = mealType.value;
   if (!name || !ingredients.length || !meal) return;
 
@@ -60,10 +59,12 @@ function addRecipe() {
   }
 }
 
+/* حفظ الوصفة وتحديث القوائم */
 function saveRecipe(recipe) {
   recipes.push(recipe);
   localStorage.setItem("recipes", JSON.stringify(recipes));
   updateIngredientSuggestions();
+  renderAllRecipes();
 
   recipeName.value = "";
   recipeIngredients.value = "";
@@ -71,10 +72,50 @@ function saveRecipe(recipe) {
   mealType.value = "";
 }
 
-/* عشوائي */
+/* عرض كل الوصفات في قسم وصفتي */
+function renderAllRecipes() {
+  const container = document.getElementById("recipesList");
+  container.innerHTML = "";
+  if (!recipes.length) {
+    container.innerText = "لا توجد وصفات";
+    return;
+  }
+  recipes.forEach(r => {
+    const div = document.createElement("div");
+    div.className = "recipe-item";
+    div.innerHTML = `
+      <h4>${r.name} (${r.meal})</h4>
+      ${r.image ? `<img src="${r.image}">` : ""}
+      <p>${r.ingredients.join(", ")}</p>
+      <button onclick="editRecipe(${r.id})">تعديل</button>
+      <button onclick="deleteRecipe(${r.id})">حذف</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+/* حذف وصفة */
+function deleteRecipe(id) {
+  recipes = recipes.filter(r => r.id !== id);
+  localStorage.setItem("recipes", JSON.stringify(recipes));
+  renderAllRecipes();
+  selectedRecipe.innerText = "تم الحذف";
+}
+
+/* تعديل وصفة */
+function editRecipe(id) {
+  const r = recipes.find(r => r.id === id);
+  if (!r) return;
+  recipeName.value = r.name;
+  recipeIngredients.value = r.ingredients.join(" ");
+  mealType.value = r.meal;
+  recipeImage.value = "";
+  deleteRecipe(id); // حذف القديم، سيتم حفظ الجديد عند الضغط إضافة
+}
+
+/* وصفة عشوائية */
 function getRandomRecipe() {
   let filtered = [...recipes];
-
   const must = mustHave.value.toLowerCase();
   const not = mustNotHave.value.toLowerCase();
   const meal = filterMeal.value;
@@ -97,13 +138,8 @@ function getRandomRecipe() {
   `;
 }
 
-function deleteRecipe(id) {
-  recipes = recipes.filter(r => r.id !== id);
-  localStorage.setItem("recipes", JSON.stringify(recipes));
-  selectedRecipe.innerText = "تم الحذف";
-}
-
 updateIngredientSuggestions();
+renderAllRecipes();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
