@@ -96,6 +96,41 @@ if(themeSelector){
     localStorage.setItem("theme", theme);
   });
 }
+function addRecipe() {
+  const name = recipeName.value.trim();
+  const ingredients = recipeIngredients.value.split(/[,،]\s*/);
+  const meal = mealType.value;
+  const imageFile = recipeImage.files[0];
+
+  if (!name || !ingredients.length) {
+    alert("الرجاء إدخال اسم الوصفة والمكونات");
+    return;
+  }
+
+  const saveRecipe = image => {
+    recipes.push({
+      name,
+      ingredients,
+      meal,
+      image
+    });
+
+    localStorage.setItem("recipes", JSON.stringify(recipes));
+    recipeName.value = "";
+    recipeIngredients.value = "";
+    recipeImage.value = "";
+    updateIngredientSuggestions();
+    alert("تمت إضافة الوصفة ✅");
+  };
+
+  if (imageFile) {
+    const reader = new FileReader();
+    reader.onload = () => saveRecipe(reader.result);
+    reader.readAsDataURL(imageFile);
+  } else {
+    saveRecipe("");
+  }
+}
 
 // ---------------------------------------------
 // عرض وصفة عشوائية مع إيموجي
