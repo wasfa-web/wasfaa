@@ -17,23 +17,53 @@
 
   <main class="stack">
 
+    <!-- زر وصفاتي -->
     <div class="card full-width">
       <h2>وصفاتي</h2>
       <button onclick="location.href='all_recipes.html'">عرض كل الوصفات</button>
     </div>
 
-    <div class="card">
-      <h3>إضافة وصفة</h3>
+    <!-- إضافة وصفة -->
+    <section class="card">
+      <h2>إضافة وصفة</h2>
+
       <input id="recipeName" placeholder="اسم الوصفة">
       <textarea id="recipeIngredients" placeholder="المكونات"></textarea>
-      <input type="file" id="recipeImage" accept="image/*" capture="environment">
+
+      <select id="mealType">
+        <option value="">نوع الوجبة</option>
+        <option value="فطور">فطور</option>
+        <option value="غداء">غداء</option>
+        <option value="عشاء">عشاء</option>
+      </select>
+
+      <input type="file" id="recipeImage" accept="image/*">
+
+      <button onclick="addRecipe()">إضافة</button>
+    </section>
+
+    <!-- فلترة -->
+    <section class="card">
+      <h2>فلترة</h2>
+
       <input id="mustHave" placeholder="يجب أن تحتوي على" list="ingredientsList">
       <input id="mustNotHave" placeholder="لا تحتوي على" list="ingredientsList">
       <datalist id="ingredientsList"></datalist>
-      <button onclick="addRecipe()">إضافة</button>
+
+      <select id="filterMeal">
+        <option value="">كل الوجبات</option>
+        <option value="فطور">فطور</option>
+        <option value="غداء">غداء</option>
+        <option value="عشاء">عشاء</option>
+      </select>
+
       <button onclick="getRandomRecipe()">وصفة عشوائية</button>
-      <div class="result"><div id="selectedRecipe">—</div></div>
-    </div>
+    </section>
+
+    <!-- نتيجة عشوائية -->
+    <section class="card result">
+      <div id="selectedRecipe">—</div>
+    </section>
 
   </main>
 
