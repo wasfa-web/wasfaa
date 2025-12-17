@@ -159,6 +159,17 @@ button {
   border-radius: 12px;
   border: 1px solid #ccc;
 }
+
+.recipe-display .recipe-box {
+  width: 95%; /* نفس عرض الحقول في مربع إضافة وصفة */
+  padding: 12px;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  background: var(--card);
+  text-align: center;
+  margin: 6px auto; /* يضيف تباعد جميل بين المربعات */
+}
+
 #mustHave, #mustNotHave {
   border: 2px solid var(--accent);
   border-radius: 12px;
