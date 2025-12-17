@@ -8,35 +8,11 @@
   --btnText: #ffffff;
 }
 
-[data-theme="signature"] {
-  --bg: #0b1220;
-  --card: rgba(255,255,255,0.08);
-  --text: #e5e7eb;
-  --accent: #7dd3fc;
-  --btnText: #0b1220;
-}
-
 [data-theme="cyan"] {
   --bg: #e8f7fb;
   --card: #ffffff;
   --text: #0a3d62;
   --accent: #4db6d6;
-  --btnText: #ffffff;
-}
-
-[data-theme="light"] {
-  --bg: #f4f4f5;
-  --card: #ffffff;
-  --text: #111;
-  --accent: #2563eb;
-  --btnText: #ffffff;
-}
-
-[data-theme="dark"] {
-  --bg: #f1f5f9;
-  --card: #ffffff;
-  --text: #0f172a;
-  --accent: #0ea5e9;
   --btnText: #ffffff;
 }
 
@@ -47,6 +23,15 @@
   --accent: #d63384;
   --btnText: #ffffff;
 }
+
+[data-theme="dark"] {
+  --bg: #020617;
+  --card: #0f172a;
+  --text: #e5e7eb;
+  --accent: #22d3ee;
+  --btnText: #020617;
+}
+
 
 body {
   margin: 0;
