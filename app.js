@@ -99,7 +99,7 @@ if(themeSelector){
 }
 function addRecipe() {
   const name = recipeName.value.trim();
-  const ingredients = recipeIngredients.value.split(/[,،]\s*/);
+  const ingredients = recipeIngredients.value.split(/[,،]\s*/).map(i => i.trim());
   const meal = mealType.value;
   const imageFile = recipeImage.files[0];
 
@@ -111,9 +111,9 @@ function addRecipe() {
   const saveRecipe = image => {
     recipes.push({
       name,
-      ingredients,
+      ingredients, // مصفوفة نظيفة بدون فراغات
       meal,
-      image
+      image: image || ""
     });
 
     localStorage.setItem("recipes", JSON.stringify(recipes));
@@ -132,6 +132,7 @@ function addRecipe() {
     saveRecipe("");
   }
 }
+
 
 // ---------------------------------------------
 // عرض وصفة عشوائية مع إيموجي
