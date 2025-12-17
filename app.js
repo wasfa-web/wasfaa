@@ -99,7 +99,11 @@ if(themeSelector){
 }
 function addRecipe() {
   const name = recipeName.value.trim();
-  const ingredients = recipeIngredients.value.split(/[,،]\s*/).map(i => i.trim());
+  let ingredients = recipeIngredients.value
+    .split(/[,،\s]+| و /)  // <-- تقسيم على فاصلة، فاصلة عربية، فراغات، أو " و "
+    .map(i => i.trim())
+    .filter(i => i);       // إزالة الفراغات الفارغة
+
   const meal = mealType.value;
   const imageFile = recipeImage.files[0];
 
@@ -132,6 +136,7 @@ function addRecipe() {
     saveRecipe("");
   }
 }
+
 function renderRecipe(r) {
   selectedRecipe.innerHTML = `
     <div class="recipe-box"><h2>${r.name}</h2></div>
