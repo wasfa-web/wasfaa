@@ -197,12 +197,13 @@ function filterSuggestions(input) {
 
   filtered.forEach(i => {
     const option = document.createElement("option");
+    // الإيموجي فقط في الاقتراح، بدون إضافته لقيمة الحقل مباشرة
     const emoji = ingredientEmojis[i.trim()];
-    option.value = emoji ? `${emoji} ${i.trim()}` : i.trim();
+    option.textContent = emoji ? `${emoji} ${i.trim()}` : i.trim();
+    option.value = i.trim(); // القيمة الفعلية بدون الإيموجي
     list.appendChild(option);
   });
 }
-
 // ---------------------------------------------
 // تحميل قائمة المكونات عند فتح الصفحة
 // ---------------------------------------------
