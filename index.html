@@ -19,8 +19,8 @@
   </div>
 
   <select id="themeSelector">
-    <option value="signature">احترافي</option>
     <option value="cyan">سماوي</option>
+    <option value="signature">احترافي</option>
     <option value="light">أبيض</option>
     <option value="dark">داكن</option>
     <option value="pink">زهري</option>
@@ -29,6 +29,7 @@
 
 <main class="stack">
 
+  <!-- إضافة وصفة -->
   <section class="card">
     <h2>إضافة وصفة</h2>
 
@@ -47,6 +48,7 @@
     <button onclick="addRecipe()">إضافة</button>
   </section>
 
+  <!-- فلترة -->
   <section class="card">
     <h2>فلترة</h2>
 
@@ -64,6 +66,13 @@
     <button onclick="getRandomRecipe()">وصفة عشوائية</button>
   </section>
 
+  <!-- عرض الوصفات كلها -->
+  <section class="card" id="allRecipes">
+    <h2>وصفتي</h2>
+    <div id="recipesList">—</div>
+  </section>
+
+  <!-- نتيجة عشوائية -->
   <section class="card result">
     <div id="selectedRecipe">—</div>
   </section>
