@@ -86,9 +86,37 @@ input, textarea, select, button {
 
 button {
   background: var(--accent);
+  color: var(--btnText);
   font-weight: 600;
   cursor: pointer;
 }
+
+/* ألوان أزرار حسب الثيم */
+[data-theme="cyan"] {
+  --accent: #4db6d6;
+  --btnText: #ffffff;
+}
+
+[data-theme="signature"] {
+  --accent: #7dd3fc;
+  --btnText: #0b1220;
+}
+
+[data-theme="light"] {
+  --accent: #38bdf8;
+  --btnText: #ffffff;
+}
+
+[data-theme="dark"] {
+  --accent: #22d3ee;
+  --btnText: #020617;
+}
+
+[data-theme="pink"] {
+  --accent: #e91e63;
+  --btnText: #ffffff;
+}
+
 
 .result img, #recipesList img {
   max-width: 100%;
