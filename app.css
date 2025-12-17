@@ -33,7 +33,7 @@
 }
 
 [data-theme="dark"] {
-  --bg: #f1f5f9;        /* خلفية فاتحة بدل الأسود */
+  --bg: #f1f5f9;
   --card: #ffffff;
   --text: #0f172a;
   --accent: #0ea5e9;
@@ -48,7 +48,6 @@
   --btnText: #ffffff;
 }
 
-/* شكل التطبيق الاحترافي */
 body {
   margin: 0;
   font-family: Cairo, sans-serif;
@@ -69,12 +68,6 @@ body {
 .top {
   text-align: center;
   padding: 16px;
-}
-
-.title-edit {
-  display: flex;
-  gap: 6px;
-  margin: 10px 0;
 }
 
 .stack {
@@ -139,7 +132,7 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 120px; /* نفس ارتفاع باقي المربعات */
+  height: 120px;
 }
 
 .full-width h2 {
