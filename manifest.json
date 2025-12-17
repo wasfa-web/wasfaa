@@ -1,11 +1,10 @@
 {
   "name": "وصفاتك",
-  "short_name": "وصفات",
-  "start_url": "index.html",
+  "short_name": "وصفاتك",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#e8f7fb",
-  "theme_color": "#4db6d6",
-  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#121212",
   "icons": [
     {
       "src": "recipe-icon.png",
