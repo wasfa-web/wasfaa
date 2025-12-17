@@ -1,121 +1,150 @@
 let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+let editRecipeId = null;
 
-// تحويل أي وصفة قديمة لتتناسب مع النظام الجديد
-recipes = recipes.map(r => {
-    if (r.category && typeof r.category === "string") r.category = [r.category];
-    else if (!r.category) r.category = [];
-    if (!r.image) r.image = null;
-    if (!r.ingredients || !Array.isArray(r.ingredients)) r.ingredients = [];
-    return r;
-});
+/* تجهيز الوصفات القديمة */
+recipes = recipes.map(r => ({
+    id: r.id || Date.now() + Math.random(),
+    name: r.name,
+    ingredients: Array.isArray(r.ingredients) ? r.ingredients : [],
+    category: Array.isArray(r.category) ? r.category : [r.category],
+    image: null
+}));
 localStorage.setItem("recipes", JSON.stringify(recipes));
 
-// تفكيك المكونات بدقة
-function parseIngredients(input) {
-    input = input.replace(/[,،]/g, ' ');
-    return input.split(/\s+/).map(i => i.trim()).filter(i => i.length > 0);
+/* تفكيك المكونات */
+function parseIngredients(text) {
+    return text
+        .replace(/[,،]/g, " ")
+        .split(/\s+/)
+        .filter(Boolean);
 }
 
-// تحديث اقتراحات المكونات التلقائية
+/* اقتراحات تلقائية */
 function updateIngredientSuggestions() {
-    const datalist = document.getElementById("ingredientsList");
-    datalist.innerHTML = "";
-    const ingredientsSet = new Set();
-    recipes.forEach(r => r.ingredients.forEach(i => ingredientsSet.add(i)));
-    ingredientsSet.forEach(i => {
+    const list = document.getElementById("ingredientsList");
+    list.innerHTML = "";
+    [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
         const option = document.createElement("option");
         option.value = i;
-        datalist.appendChild(option);
+        list.appendChild(option);
     });
 }
 
-// إضافة وصفة جديدة
+/* إضافة / تعديل وصفة */
 function addRecipe() {
-    const name = document.getElementById("recipeName").value.trim();
-    const ingredients = parseIngredients(document.getElementById("recipeIngredients").value);
-    const category = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked'))
-                          .map(c => c.value);
+    const name = recipeName.value.trim();
+    const ingredients = parseIngredients(recipeIngredients.value);
+    const category = [...document.querySelectorAll('input[name="recipeCategory"]:checked')]
+        .map(c => c.value);
 
-    if (!name || ingredients.length === 0 || category.length === 0) {
-        alert("الرجاء إدخال اسم الوصفة والمكونات واختيار تصنيف واحد على الأقل");
+    if (!name || !ingredients.length || !category.length) {
+        alert("يرجى تعبئة جميع الحقول");
         return;
     }
 
-    const imageFile = document.getElementById("recipeImage").files[0];
-    if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            saveRecipe(name, ingredients, category, e.target.result);
-        };
-        reader.readAsDataURL(imageFile);
+    if (editRecipeId) {
+        const recipe = recipes.find(r => r.id === editRecipeId);
+        recipe.name = name;
+        recipe.ingredients = ingredients;
+        recipe.category = category;
+        editRecipeId = null;
+        alert("تم تعديل الوصفة ✏️");
     } else {
-        saveRecipe(name, ingredients, category, null);
+        recipes.push({
+            id: Date.now(),
+            name,
+            ingredients,
+            category,
+            image: null
+        });
+        alert("تمت إضافة الوصفة 👌");
     }
-}
 
-function saveRecipe(name, ingredients, category, imageData) {
-    recipes.push({ name, ingredients, category, image: imageData });
     localStorage.setItem("recipes", JSON.stringify(recipes));
     updateIngredientSuggestions();
-
-    alert("تمت إضافة الوصفة 👌");
-
-    document.getElementById("recipeName").value = "";
-    document.getElementById("recipeIngredients").value = "";
-    document.querySelectorAll('input[name="recipeCategory"]:checked').forEach(c => c.checked = false);
-    document.getElementById("recipeImage").value = "";
+    resetForm();
 }
 
-// اختيار وصفة عشوائية
+/* اختيار عشوائي */
 function getRandomRecipe() {
-    const selectedCategory = document.getElementById("filterCategory").value;
-    const mustHave = document.getElementById("mustHave").value.trim().toLowerCase();
-    const mustNotHave = document.getElementById("mustNotHave").value.trim().toLowerCase();
+    let filtered = [...recipes];
+    const cat = filterCategory.value;
+    const must = mustHave.value.toLowerCase();
+    const not = mustNotHave.value.toLowerCase();
 
-    let filtered = recipes;
+    if (cat) filtered = filtered.filter(r => r.category.includes(cat));
+    if (must) filtered = filtered.filter(r =>
+        r.ingredients.some(i => i.toLowerCase().includes(must))
+    );
+    if (not) filtered = filtered.filter(r =>
+        !r.ingredients.some(i => i.toLowerCase().includes(not))
+    );
 
-    if (selectedCategory) filtered = filtered.filter(r => r.category.includes(selectedCategory));
-    if (mustHave) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase().includes(mustHave)));
-    if (mustNotHave) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase().includes(mustNotHave)));
-
-    if (filtered.length === 0) {
-        document.getElementById("selectedRecipe").innerHTML = "لا توجد وصفة مطابقة 😢";
+    if (!filtered.length) {
+        selectedRecipe.innerHTML = "لا توجد وصفة مطابقة 😢";
         return;
     }
 
-    const random = filtered[Math.floor(Math.random() * filtered.length)];
-    const recipeHTML = `${random.image ? `<img src="${random.image}" alt="صورة الوصفة" style="max-width:100%;border-radius:10px;margin-bottom:10px;">` : ''}
-        <h3>${random.name}</h3>
-        <p>المكونات: ${random.ingredients.join(", ")}</p>
-        <p>التصنيفات: ${random.category.join(", ")}</p>`;
-
-    document.getElementById("selectedRecipe").innerHTML = recipeHTML;
+    const r = filtered[Math.floor(Math.random() * filtered.length)];
+    selectedRecipe.innerHTML = `
+        <h3>${r.name}</h3>
+        <p>المكونات: ${r.ingredients.join(", ")}</p>
+        <p>التصنيفات: ${r.category.join(", ")}</p>
+        <button onclick="editRecipe(${r.id})">✏️ تعديل</button>
+        <button onclick="deleteRecipe(${r.id})">🗑️ حذف</button>
+    `;
 }
 
-// حفظ اسم المستخدم والإيموجي والثيم
+/* تعديل */
+function editRecipe(id) {
+    const r = recipes.find(r => r.id === id);
+    recipeName.value = r.name;
+    recipeIngredients.value = r.ingredients.join(" ");
+    document.querySelectorAll('input[name="recipeCategory"]').forEach(c =>
+        c.checked = r.category.includes(c.value)
+    );
+    editRecipeId = id;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* حذف */
+function deleteRecipe(id) {
+    if (!confirm("هل أنت متأكد من الحذف؟")) return;
+    recipes = recipes.filter(r => r.id !== id);
+    localStorage.setItem("recipes", JSON.stringify(recipes));
+    updateIngredientSuggestions();
+    selectedRecipe.innerHTML = "تم حذف الوصفة 🗑️";
+}
+
+/* إعادة تعيين */
+function resetForm() {
+    recipeName.value = "";
+    recipeIngredients.value = "";
+    document.querySelectorAll('input[name="recipeCategory"]').forEach(c => c.checked = false);
+}
+
+/* إعدادات المستخدم */
 function saveUserSettings() {
-    const userName = document.getElementById("userName").value.trim();
-    const theme = document.getElementById("themeSelector").value;
-    if(userName) localStorage.setItem("userName", userName);
-    localStorage.setItem("theme", theme);
+    localStorage.setItem("userName", userName.value);
+    localStorage.setItem("theme", themeSelector.value);
     applyUserSettings();
 }
 
-// تطبيق الإعدادات عند تحميل الصفحة
 function applyUserSettings() {
-    const storedName = localStorage.getItem("userName");
-    if(storedName) {
-        document.getElementById("welcomeTitle").innerText = storedName;
-        document.getElementById("userName").value = storedName;
-    }
-
+    const name = localStorage.getItem("userName");
     const theme = localStorage.getItem("theme") || "white";
-    document.getElementById("themeSelector").value = theme;
-    document.body.className = ""; 
-    document.body.classList.add(`theme-${theme}`);
+    if (name) welcomeTitle.innerText = name;
+    document.body.className = `theme-${theme}`;
 }
+
+/* إيموجي متحرك */
+const emojis = ["👨‍💻", "🔥", "🚀", "✨", "🧠"];
+let emojiIndex = 0;
+setInterval(() => {
+    devEmoji.innerText = emojis[emojiIndex++ % emojis.length];
+}, 2000);
 
 window.onload = () => {
-    updateIngredientSuggestions();
     applyUserSettings();
+    updateIngredientSuggestions();
 };
