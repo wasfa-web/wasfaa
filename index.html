@@ -4,61 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>وصفاتك العشوائية</title>
+
     <link rel="stylesheet" href="app.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4db6d6">
 </head>
 <body>
-
-<header>
-    <div class="user-settings">
-        <input id="userName" placeholder="اسمك + إيموجي">
-        <select id="themeSelector">
-            <option value="white">أبيض</option>
-            <option value="dark">داكن</option>
-            <option value="pink">وردي</option>
-            <option value="cream">كريمي ✨</option>
-            <option value="sky">سماوي 💎</option>
-        </select>
-        <button onclick="saveUserSettings()">حفظ</button>
-    </div>
-</header>
 
 <h1 id="welcomeTitle">🧑‍🍳 وصفاتك العشوائية</h1>
 
 <section class="add-recipe">
     <h2>إضافة وصفة</h2>
     <input id="recipeName" placeholder="اسم الوصفة">
-    <textarea id="recipeIngredients" placeholder="المكونات (افصل بينها بفواصل أو مسافات)"></textarea>
+    <textarea id="recipeIngredients" placeholder="المكونات"></textarea>
 
-    <div class="category-section">
-        <label><input type="checkbox" name="recipeCategory" value="فطور"> فطور</label>
-        <label><input type="checkbox" name="recipeCategory" value="غداء"> غداء</label>
-        <label><input type="checkbox" name="recipeCategory" value="عشاء"> عشاء</label>
-        <label><input type="checkbox" name="recipeCategory" value="سناك"> سناك</label>
-    </div>
+    <label><input type="checkbox" name="recipeCategory" value="فطور"> فطور</label>
+    <label><input type="checkbox" name="recipeCategory" value="غداء"> غداء</label>
+    <label><input type="checkbox" name="recipeCategory" value="عشاء"> عشاء</label>
 
-    <input type="file" id="recipeImage" accept="image/*">
     <button onclick="addRecipe()">إضافة</button>
 </section>
 
 <section class="filters">
-    <h2>اختيار وصفة</h2>
-    <select id="filterCategory">
-        <option value="">بدون تصنيف</option>
-        <option value="فطور">فطور</option>
-        <option value="غداء">غداء</option>
-        <option value="عشاء">عشاء</option>
-        <option value="سناك">سناك</option>
-    </select>
-
     <input id="mustHave" placeholder="يجب أن تحتوي على" list="ingredientsList">
     <input id="mustNotHave" placeholder="لا تحتوي على" list="ingredientsList">
     <datalist id="ingredientsList"></datalist>
-
-    <button onclick="getRandomRecipe()">أعطني وصفة عشوائية</button>
+    <button onclick="getRandomRecipe()">وصفة عشوائية</button>
 </section>
 
 <section class="result">
-    <h2>الوصفة المختارة:</h2>
     <div id="selectedRecipe">—</div>
 </section>
 
