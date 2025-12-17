@@ -1,3 +1,6 @@
+// تطبيق الثيم المختار في الصفحة الأولى
+document.body.setAttribute("data-theme", localStorage.getItem("theme") || "cyan");
+
 const list = document.getElementById("allRecipes");
 let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
 
