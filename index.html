@@ -7,15 +7,20 @@
 
   <link rel="stylesheet" href="app.css">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1f2933">
 </head>
 <body>
 
 <header class="top">
-  <h1 id="appTitle" contenteditable="true"></h1>
+  <h1 id="appTitle"></h1>
+
+  <div class="title-edit">
+    <input id="titleEditor" placeholder="تغيير اسم التطبيق">
+    <button onclick="saveTitle()">حفظ</button>
+  </div>
 
   <select id="themeSelector">
     <option value="signature">احترافي</option>
+    <option value="cyan">سماوي</option>
     <option value="light">أبيض</option>
     <option value="dark">داكن</option>
     <option value="pink">زهري</option>
@@ -29,22 +34,32 @@
 
     <input id="recipeName" placeholder="اسم الوصفة">
     <textarea id="recipeIngredients" placeholder="المكونات"></textarea>
-    <input type="file" id="recipeImage" accept="image/*">
 
-    <div class="cats">
-      <label><input type="checkbox" value="فطور"> فطور</label>
-      <label><input type="checkbox" value="غداء"> غداء</label>
-      <label><input type="checkbox" value="عشاء"> عشاء</label>
-    </div>
+    <select id="mealType">
+      <option value="">نوع الوجبة</option>
+      <option value="فطور">فطور</option>
+      <option value="غداء">غداء</option>
+      <option value="عشاء">عشاء</option>
+    </select>
+
+    <input type="file" id="recipeImage" accept="image/*">
 
     <button onclick="addRecipe()">إضافة</button>
   </section>
 
   <section class="card">
-    <h2>اختيار ذكي</h2>
+    <h2>فلترة</h2>
 
-    <input id="mustHave" placeholder="يجب أن تحتوي على">
-    <input id="mustNotHave" placeholder="لا تحتوي على">
+    <input id="mustHave" placeholder="يجب أن تحتوي على" list="ingredientsList">
+    <input id="mustNotHave" placeholder="لا تحتوي على" list="ingredientsList">
+    <datalist id="ingredientsList"></datalist>
+
+    <select id="filterMeal">
+      <option value="">كل الوجبات</option>
+      <option value="فطور">فطور</option>
+      <option value="غداء">غداء</option>
+      <option value="عشاء">عشاء</option>
+    </select>
 
     <button onclick="getRandomRecipe()">وصفة عشوائية</button>
   </section>
@@ -56,7 +71,7 @@
 </main>
 
 <footer>
-  Crafted with care
+  صنع بحب 🤍
 </footer>
 
 <script src="app.js"></script>
