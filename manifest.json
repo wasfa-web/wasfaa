@@ -3,6 +3,6 @@
   "short_name": "وصفات",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0b1220",
-  "theme_color": "#0b1220"
+  "background_color": "#e8f7fb",
+  "theme_color": "#4db6d6"
 }
