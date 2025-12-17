@@ -75,6 +75,14 @@ let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 // ---------------------------------------------
 // عناصر الصفحة
 // ---------------------------------------------
+const appTitle = document.getElementById("appTitle");
+// عند تركيز الحقل يحدد النص كله بعد 100 مللي ثانية
+appTitle.addEventListener("focus", () => {
+  setTimeout(() => {
+    appTitle.select();
+  }, 100);
+});
+
 const selectedRecipe = document.getElementById("selectedRecipe");
 const mustHave = document.getElementById("mustHave");
 const mustNotHave = document.getElementById("mustNotHave");
