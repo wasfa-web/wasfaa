@@ -7,7 +7,6 @@
   --accent: #7dd3fc;
 }
 
-/* احترافي (Signature) */
 [data-theme="signature"] {
   --bg: #0b1220;
   --card: rgba(255,255,255,0.08);
@@ -15,7 +14,6 @@
   --accent: #7dd3fc;
 }
 
-/* سماوي */
 [data-theme="cyan"] {
   --bg: #e8f7fb;
   --card: #ffffff;
@@ -23,7 +21,6 @@
   --accent: #4db6d6;
 }
 
-/* أبيض */
 [data-theme="light"] {
   --bg: #f4f4f5;
   --card: #ffffff;
@@ -31,7 +28,6 @@
   --accent: #2563eb;
 }
 
-/* داكن */
 [data-theme="dark"] {
   --bg: #020617;
   --card: #0f172a;
@@ -39,7 +35,6 @@
   --accent: #22d3ee;
 }
 
-/* زهري */
 [data-theme="pink"] {
   --bg: #fff0f6;
   --card: #ffffff;
@@ -56,7 +51,7 @@ body {
 
 .top {
   text-align: center;
-  padding: 20px;
+  padding: 16px;
 }
 
 .title-edit {
@@ -68,22 +63,21 @@ body {
 .stack {
   max-width: 520px;
   margin: auto;
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .card {
   background: var(--card);
-  padding: 18px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  padding: 16px;
+  border-radius: 14px;
 }
 
 input, textarea, select, button {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 8px;
   padding: 10px;
   border-radius: 10px;
   border: none;
@@ -93,7 +87,6 @@ input, textarea, select, button {
 button {
   background: var(--accent);
   font-weight: 600;
-  cursor: pointer;
 }
 
 .result img {
@@ -106,5 +99,11 @@ footer {
   text-align: center;
   opacity: .6;
   font-size: 12px;
-  padding: 20px;
+  padding: 16px;
+}
+
+/* موبايل */
+@media (max-width: 480px) {
+  h1 { font-size: 20px; }
+  .card { padding: 14px; }
 }
