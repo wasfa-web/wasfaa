@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>وصفاتك</title>
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="app.css">
 </head>
 
@@ -13,25 +12,29 @@
 <div class="app-shell">
 
   <div class="top">
-    <input id="appTitle" value="🧑‍🍳 وصفاتك">
-    <select id="themeSelector">
-      <option value="cyan">أساسي</option>
-      <option value="pink">زهري</option>
-      <option value="dark">داكن</option>
-    </select>
-  </div>
+  <input id="appTitle" value="🧑‍🍳 وصفاتك" placeholder="اكتب اسم التطبيق هنا">
+     <select id="themeSelector">
+    <option value="cyan">أساسي</option>
+    <option value="pink">زهري</option>
+    <option value="dark">داكن</option>
+  </select>
+</div>
+
 
   <main class="stack">
 
+    <!-- زر وصفاتي -->
     <div class="card full-width">
       <h2>وصفاتي</h2>
       <button onclick="location.href='all_recipes.html'">عرض كل الوصفات</button>
     </div>
 
+    <!-- إضافة وصفة -->
     <section class="card">
       <h2>إضافة وصفة</h2>
+
       <input id="recipeName" placeholder="اسم الوصفة">
-      <textarea id="recipeIngredients" placeholder="المكونات (افصل بفاصلة)"></textarea>
+      <textarea id="recipeIngredients" placeholder="المكونات"></textarea>
 
       <select id="mealType">
         <option value="">نوع الوجبة</option>
@@ -41,11 +44,14 @@
       </select>
 
       <input type="file" id="recipeImage" accept="image/*">
+
       <button onclick="addRecipe()">إضافة</button>
     </section>
 
+    <!-- فلترة -->
     <section class="card">
       <h2>محتار وش تاكل ؟</h2>
+
       <input id="mustHave" placeholder="يجب أن تحتوي على" list="ingredientsList">
       <input id="mustNotHave" placeholder="لا تحتوي على" list="ingredientsList">
       <datalist id="ingredientsList"></datalist>
@@ -60,13 +66,16 @@
       <button onclick="getRandomRecipe()">وصفة عشوائية</button>
     </section>
 
+    <!-- نتيجة عشوائية -->
     <section class="card result">
-      <div id="selectedRecipe">—</div>
-    </section>
+  <div id="selectedRecipe" class="recipe-display">—</div>
+</section>
 
   </main>
 
-  <footer>عمل المبرمج القدير محمد🧑‍💻</footer>
+  <footer>
+    عمل المبرمج القدير محمد🧑‍💻
+  </footer>
 
 </div>
 
