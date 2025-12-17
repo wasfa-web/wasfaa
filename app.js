@@ -144,16 +144,7 @@ function renderRecipe(r) {
     </div>
   `;
 }
-function updateIngredientSuggestions() {
-  const list = document.getElementById("ingredientsList");
-  if (!list) return;
-  list.innerHTML = "";
-  [...new Set(recipes.flatMap(r => r.ingredients.map(i => i.trim())))].forEach(i => {
-    const option = document.createElement("option");
-    option.value = i;
-    list.appendChild(option);
-  });
-}
+
 
 
 // ---------------------------------------------
@@ -214,9 +205,9 @@ function filterSuggestions(input) {
 // ---------------------------------------------
 function updateIngredientSuggestions() {
   const list = document.getElementById("ingredientsList");
-  if(!list) return;
+  if (!list) return;
   list.innerHTML = "";
-  [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
+  [...new Set(recipes.flatMap(r => r.ingredients.map(i => i.trim())))].forEach(i => {
     const option = document.createElement("option");
     option.value = i;
     list.appendChild(option);
