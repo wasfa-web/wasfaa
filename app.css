@@ -16,13 +16,14 @@
   --btnText: #ffffff;
 }
 
-[data-theme="dark"] {
-  --bg: #121212;              /* خلفية عامة داكنة */
-  --card: #1e1e1e;            /* لون المربعات */
-  --text: #e0e0e0;            /* نص واضح */
-  --accent: #bb86fc;          /* ألوان الأزرار والتحديد */
-  --btnText: #ffffff;          /* نص الأزرار */
+[data-theme="pink"] {
+  --bg: #fff0f6;       /* خلفية عامة */
+  --card: #ffffff;     /* خلفية البطاقات */
+  --text: #4a154b;     /* لون النص */
+  --accent: #d63384;   /* اللون الأساسي للأزرار والحدود */
+  --btnText: #ffffff;  /* لون نص الأزرار */
 }
+
 
 
 [data-theme="dark"] {
