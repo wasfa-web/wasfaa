@@ -17,19 +17,22 @@
 
   <main class="stack">
 
-    <!-- زر وصفاتي -->
     <div class="card full-width">
       <h2>وصفاتي</h2>
       <button onclick="location.href='all_recipes.html'">عرض كل الوصفات</button>
     </div>
 
-    <!-- إضافة وصفة -->
     <div class="card">
       <h3>إضافة وصفة</h3>
       <input id="recipeName" placeholder="اسم الوصفة">
       <textarea id="recipeIngredients" placeholder="المكونات"></textarea>
       <input type="file" id="recipeImage" accept="image/*" capture="environment">
+      <input id="mustHave" placeholder="يجب أن تحتوي على" list="ingredientsList">
+      <input id="mustNotHave" placeholder="لا تحتوي على" list="ingredientsList">
+      <datalist id="ingredientsList"></datalist>
       <button onclick="addRecipe()">إضافة</button>
+      <button onclick="getRandomRecipe()">وصفة عشوائية</button>
+      <div class="result"><div id="selectedRecipe">—</div></div>
     </div>
 
   </main>
