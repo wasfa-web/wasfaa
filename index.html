@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <h1>🧑‍🍳 وصفاتك العشوائية</h1>
+    <header>
+        <div class="user-settings">
+            <input id="userName" placeholder="اسمك + إيموجي">
+            <select id="themeSelector">
+                <option value="white">ثيم أبيض</option>
+                <option value="dark">ثيم داك</option>
+                <option value="pink">ثيم وردي</option>
+            </select>
+            <button onclick="saveUserSettings()">حفظ</button>
+        </div>
+    </header>
+
+    <h1 id="welcomeTitle">🧑‍🍳 وصفاتك العشوائية</h1>
 
     <section class="add-recipe">
         <h2>إضافة وصفة</h2>
