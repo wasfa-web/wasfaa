@@ -1,47 +1,60 @@
-let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
-const container = document.getElementById("recipesList");
+const list = document.getElementById("allRecipes");
+let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
 
-function renderAllRecipes() {
-  container.innerHTML = "";
-
+function render() {
+  list.innerHTML = "";
   if (!recipes.length) {
-    container.innerHTML = "<p>لا توجد وصفات</p>";
+    list.innerHTML = "<p>لا توجد وصفات</p>";
     return;
   }
 
   recipes.forEach((r, i) => {
-    container.innerHTML += `
+    list.innerHTML += `
       <div class="card recipe-item">
         <h3>${r.name}</h3>
         <p>${r.ingredients.join(", ")}</p>
+        <p>${r.meal}</p>
         ${r.image ? `<img src="${r.image}">` : ""}
-        <div style="display:flex;gap:8px;">
-          <button onclick="editRecipe(${i})">✏️ تعديل</button>
-          <button onclick="deleteRecipe(${i})">🗑 حذف</button>
-        </div>
+
+        <button onclick="editRecipe(${i})">✏️ تعديل</button>
+        <button onclick="deleteRecipe(${i})">🗑 حذف</button>
+        <button onclick="shareRecipe(${i})">📤 مشاركة</button>
       </div>
     `;
   });
 }
 
 function deleteRecipe(i) {
-  if (!confirm("حذف الوصفة؟")) return;
+  if (!confirm("هل أنت متأكد من الحذف؟")) return;
   recipes.splice(i, 1);
   localStorage.setItem("recipes", JSON.stringify(recipes));
-  renderAllRecipes();
+  render();
 }
 
 function editRecipe(i) {
   const name = prompt("اسم الوصفة", recipes[i].name);
   if (!name) return;
-  const ing = prompt("المكونات", recipes[i].ingredients.join(" "));
+  const ing = prompt("المكونات", recipes[i].ingredients.join(", "));
   if (!ing) return;
+  const meal = prompt("نوع الوجبة", recipes[i].meal);
+  if (!meal) return;
 
   recipes[i].name = name;
-  recipes[i].ingredients = ing.replace(/[,،]/g," ").split(/\s+/);
+  recipes[i].ingredients = ing.split(/[,،]\s*/);
+  recipes[i].meal = meal;
 
   localStorage.setItem("recipes", JSON.stringify(recipes));
-  renderAllRecipes();
+  render();
 }
 
-renderAllRecipes();
+function shareRecipe(i) {
+  const r = recipes[i];
+  const text = `وصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`;
+  if (navigator.share) {
+    navigator.share({ title: r.name, text: text }).catch(console.error);
+  } else {
+    prompt("انسخ هذه الوصفة وشاركها:", text);
+  }
+}
+
+render();
