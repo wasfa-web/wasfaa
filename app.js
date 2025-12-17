@@ -1,3 +1,6 @@
+// ---------------------------------------------
+// قائمة الإيموجي لكل مكون
+// ---------------------------------------------
 const ingredientEmojis = {
   // فواكه
   "موز":"🍌","تفاح":"🍎","برتقال":"🍊","ليمون":"🍋","فراولة":"🍓",
@@ -8,7 +11,7 @@ const ingredientEmojis = {
   "تين أخضر":"🍈","خوخ أصفر":"🍑","تفاح أخضر":"🍏","عنب أسود":"🍇","أناناس صغير":"🍍",
   "فراولة صغيرة":"🍓","رمان أحمر":"🌹","كيوي صغير":"🥝","مانجو أصفر":"🥭","موز صغير":"🍌",
   "بطيخ أحمر":"🍉","كمثرى صغيرة":"🍐","جوافة صغيرة":"🍈","توت بري":"🫐","بابايا صغيرة":"🥭",
-  
+
   // خضار
   "طماطم":"🍅","خيار":"🥒","جزر":"🥕","فلفل أحمر":"🌶️","بصل":"🧅",
   "ثوم":"🧄","بطاطس":"🥔","قرنبيط":"🥦","سبانخ":"🥬","فطر":"🍄",
@@ -23,167 +26,76 @@ const ingredientEmojis = {
   "عدس":"🥣","حمص":"🥣","فول":"🥣","نقانق":"🌭","لحم مقدد":"🥓",
   "سلمون":"🐟","تونة":"🐟","محار":"🦪","كابوريا":"🦀","محار صغير":"🦪",
   "روبيان":"🦐","كفتة":"🥩","برغر":"🍔","همبرغر":"🍔","سوشي":"🍣",
-  
+
   // مشروبات
   "ماء":"💧","عصير برتقال":"🧃","عصير تفاح":"🧃","قهوة":"☕","شاي":"🍵",
   "حليب الشوكولاتة":"🥛🍫","مشروب غازي":"🥤","نبيذ":"🍷","بيرة":"🍺",
   "عصير طبيعي":"🧃","سموثي":"🍹","عصير ليمون":"🍋","عصير مانجو":"🥭",
   "كابتشينو":"☕","لاتيه":"☕","موهيتو":"🍸","كوكتيل":"🍹","شوكولاتة ساخنة":"🥛🍫",
-  
+
   // مخبوزات وحبوب
   "خبز":"🍞","كرواسون":"🥐","بيتزا":"🍕","معكرونة":"🍝","أرز":"🍚",
   "كعك":"🍰","بان كيك":"🥞","دونات":"🍩","وافل":"🧇","توست":"🍞",
   "مقرمشات":"🍘","بسكويت":"🍪","كورن فليكس":"🥣","خبز أسمر":"🍞","خبز أبيض":"🍞",
   "فطائر":"🥮","رغيف":"🍞","كرامبل":"🍰","مافن":"🧁","تشيز كيك":"🍰",
-  
+
   // حلويات
   "شوكولاتة":"🍫","مربى":"🍯","عسل":"🍯","كيك":"🍰","آيس كريم":"🍨",
   "بودينغ":"🍮","حلوى":"🍬","بسكويت":"🍪","جلي":"🍮","كراميل":"🍮",
   "موس":"🍮","تارت":"🍰","براوني":"🍫","براونيز":"🍫","كعك فواكه":"🍰",
   "بودينغ شوكولاتة":"🍮","حلوى جافة":"🍬","سويتس":"🍬","تشوكليت":"🍫","ميني كيك":"🧁",
-  
+
   // مكسرات وزيوت
   "مكسرات":"🥜","لوز":"🥜","فستق":"🥜","جوز":"🥜","زيت الزيتون":"🫒",
   "زيت دوار الشمس":"🛢️","زبدة":"🧈","زيت نباتي":"🛢️","زيت جوز الهند":"🥥",
-  
+
   // أطعمة جاهزة
   "سندويش":"🥪","تاكو":"🌮","فلافل":"🥙","شاورما":"🥙","هوت دوغ":"🌭",
   "بطاطس مقلية":"🍟","برغر":"🍔","همبرغر":"🍔","بيتزا صغيرة":"🍕","نودلز":"🍜",
   "رامن":"🍜","سوشي صغير":"🍣","سلطة":"🥗","شوربة":"🍲","كبسة":"🍛",
-  "برياني":"🍛","طاجن":"🍲","مرق":"🍲","شوربة عدس":"🥣","سمبوسة":"🥟",
-  
-  // توابل وأعشاب
-  "ملح":"🧂","فلفل أسود":"🧂","بهارات":"🌿","كمون":"🌿","زعتر":"🌿",
-  "قرفة":"🌿","هيل":"🌿","زنجبيل":"🌿","بابريكا":"🌶️","أوريجانو":"🌿",
-  "ريحان":"🌿","نعناع طازج":"🌱","بقدونس":"🌿","ثوم بودرة":"🧄","بابونج":"🌿",
-  
-  // إضافات متنوعة
-  "صلصة طماطم":"🍅","صلصة بيستو":"🌿","صلصة جبن":"🧀","كريمة":"🥛","مشروم":"🍄",
-  "طحينة":"🥣","صلصة الصويا":"🥢","صلصة حارة":"🌶️","صلصة باربكيو":"🥫","صلصة الفلفل":"🌶️",
-  "زبيب":"🍇","تمر":"🌴","مشمش مجفف":"🥭","جوز هند":"🥥","عصير ليمون":"🍋",
-  "فواكه مجففة":"🥭","كاجو":"🥜","زبدة فول سوداني":"🥜","فستق حلبي":"🥜","لوز محمص":"🥜",
-  
-  // إضافات عالمية
-  "توابل آسيوية":"🌿","صلصة سمك":"🐟","سمك سلمون":"🐟","جمبري صغير":"🦐","كرات لحم":"🥩",
-  "فطائر يابانية":"🥮","سوشي رول":"🍣","رامن شوربة":"🍜","باستا":"🍝","بيتزا مارجريتا":"🍕",
-  
-  // المشروبات الخاصة
-  "عصير فراولة":"🍓","عصير تفاح أحمر":"🍎","عصير برتقال طبيعي":"🧃","موهيتو فواكه":"🍸",
-  "كوكتيل فواكه":"🍹","شاي مثلج":"🍹","قهوة مثلجة":"☕","لاتيه مثلج":"☕","كابتشينو مثلج":"☕"
+  "برياني":"🍛","طاجن":"🍲","مرق":"🍲","شوربة عدس":"🥣","سمبوسة":"🥟"
 };
 
+// ---------------------------------------------
+// دالة لتحويل المكونات لإيموجي
+// ---------------------------------------------
 function addEmojisToIngredients(ingredients) {
   return ingredients.map(i => ingredientEmojis[i] || i).join(", ");
 }
 
-// مثال داخل render أو عند اختيار وصفة عشوائية
-selectedRecipe.innerHTML = `
-  <div class="recipe-box"><h2>${r.name}</h2></div>
-  ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
-  <div class="recipe-box"><p><strong>المكونات:</strong> ${addEmojisToIngredients(r.ingredients)}</p></div>
-  <div class="recipe-box"><p><strong>نوع الوجبة:</strong> ${r.meal || "—"}</p></div>
-`;
-
-
+// ---------------------------------------------
+// تحميل الوصفات من localStorage
+// ---------------------------------------------
 let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 
-const appTitle = document.getElementById("appTitle");
-const themeSelector = document.getElementById("themeSelector");
+// ---------------------------------------------
+// عناصر الصفحة
+// ---------------------------------------------
+const selectedRecipe = document.getElementById("selectedRecipe");
 const mustHave = document.getElementById("mustHave");
 const mustNotHave = document.getElementById("mustNotHave");
-const selectedRecipe = document.getElementById("selectedRecipe");
+const filterMeal = document.getElementById("filterMeal");
+const themeSelector = document.getElementById("themeSelector");
 
-// تحميل الاسم من localStorage عند فتح التطبيق
-appTitle.value = localStorage.getItem("appTitle") || "🧑‍🍳 وصفاتك";
-appTitle.addEventListener("input", () => {
-  localStorage.setItem("appTitle", appTitle.value);
-});
-
-// تحميل الثيم من localStorage عند فتح الصفحة
+// ---------------------------------------------
+// تحميل الثيم من localStorage
+// ---------------------------------------------
 const savedTheme = localStorage.getItem("theme") || "cyan";
 document.body.setAttribute("data-theme", savedTheme);
-themeSelector.value = savedTheme;
+if(themeSelector) themeSelector.value = savedTheme;
 
 // تغيير الثيم عند اختيار المستخدم
-themeSelector.addEventListener("change", () => {
-  const theme = themeSelector.value;
-  document.body.setAttribute("data-theme", theme);
-  localStorage.setItem("theme", theme);
-});
-
-// تحليل المكونات النصية إلى مصفوفة
-function parseIngredients(text) {
-  return text.replace(/[,،]/g, " ").split(/\s+/).filter(Boolean);
-}
-
-// تحديث قائمة اقتراحات المكونات
-function updateIngredientSuggestions() {
-  const list = document.getElementById("ingredientsList");
-  list.innerHTML = "";
-  [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
-    const option = document.createElement("option");
-    option.value = i;
-    list.appendChild(option);
+if(themeSelector){
+  themeSelector.addEventListener("change", () => {
+    const theme = themeSelector.value;
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   });
 }
 
-// إضافة وصفة جديدة
-function addRecipe() {
-  const name = recipeName.value.trim();
-  const ingredients = parseIngredients(recipeIngredients.value);
-  const imageInput = document.getElementById("recipeImage");
-  const meal = document.getElementById("mealType").value;
-
-  if (!name || !ingredients.length) return;
-
-  if (imageInput.files[0]) {
-    const reader = new FileReader();
-    reader.onload = () => saveRecipe(reader.result);
-    reader.readAsDataURL(imageInput.files[0]);
-  } else {
-    saveRecipe("");
-  }
-
-  function saveRecipe(img) {
-    recipes.push({
-      id: Date.now(),
-      name,
-      ingredients,
-      image: img,
-      meal
-    });
-    localStorage.setItem("recipes", JSON.stringify(recipes));
-    recipeName.value = "";
-    recipeIngredients.value = "";
-    imageInput.value = "";
-    document.getElementById("mealType").value = "";
-    updateIngredientSuggestions();
-  }
-}
-
-// اقتراح تلقائي عند الكتابة في المربعين
-function filterSuggestions(input) {
-  const allIngredients = [...new Set(recipes.flatMap(r => r.ingredients))];
-  const value = input.value.toLowerCase();
-  const filtered = allIngredients.filter(i => i.toLowerCase().includes(value));
-
-  if (!filtered.length && value.length) {
-    input.setCustomValidity("لا يوجد مكون بهذا الاسم");
-    input.reportValidity();
-  } else {
-    input.setCustomValidity("");
-  }
-
-  const list = document.getElementById(input.getAttribute("list"));
-  list.innerHTML = "";
-  filtered.forEach(i => {
-    const option = document.createElement("option");
-    option.value = i;
-    list.appendChild(option);
-  });
-}
-
-// اختيار وصفة عشوائية
+// ---------------------------------------------
+// عرض وصفة عشوائية مع إيموجي
+// ---------------------------------------------
 function getRandomRecipe() {
   let filtered = [...recipes];
   const must = mustHave.value.toLowerCase();
@@ -204,14 +116,47 @@ function getRandomRecipe() {
   selectedRecipe.innerHTML = `
     <div class="recipe-box"><h2>${r.name}</h2></div>
     ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
-    <div class="recipe-box"><p><strong>المكونات:</strong> ${r.ingredients.join(", ")}</p></div>
+    <div class="recipe-box"><p><strong>المكونات:</strong> ${addEmojisToIngredients(r.ingredients)}</p></div>
     <div class="recipe-box"><p><strong>نوع الوجبة:</strong> ${r.meal || "—"}</p></div>
   `;
 }
 
-// تفعيل الاقتراحات التلقائية عند الكتابة
-mustHave.addEventListener("input", () => filterSuggestions(mustHave));
-mustNotHave.addEventListener("input", () => filterSuggestions(mustNotHave));
+// ---------------------------------------------
+// الاقتراح التلقائي عند الكتابة
+// ---------------------------------------------
+mustHave?.addEventListener("input", () => filterSuggestions(mustHave));
+mustNotHave?.addEventListener("input", () => filterSuggestions(mustNotHave));
 
-// تحديث قائمة الاقتراحات عند تحميل الصفحة
+function filterSuggestions(input) {
+  const allIngredients = [...new Set(recipes.flatMap(r => r.ingredients))];
+  const value = input.value.toLowerCase();
+  const filtered = allIngredients.filter(i => i.toLowerCase().includes(value));
+
+  if (!filtered.length && value.length) {
+    input.setCustomValidity("لا يوجد مكون بهذا الاسم");
+    input.reportValidity();
+  } else input.setCustomValidity("");
+
+  const list = document.getElementById(input.getAttribute("list"));
+  list.innerHTML = "";
+  filtered.forEach(i => {
+    const option = document.createElement("option");
+    option.value = i;
+    list.appendChild(option);
+  });
+}
+
+// ---------------------------------------------
+// تحميل قائمة المكونات عند فتح الصفحة
+// ---------------------------------------------
+function updateIngredientSuggestions() {
+  const list = document.getElementById("ingredientsList");
+  if(!list) return;
+  list.innerHTML = "";
+  [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
+    const option = document.createElement("option");
+    option.value = i;
+    list.appendChild(option);
+  });
+}
 updateIngredientSuggestions();
