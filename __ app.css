@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    background: #fafafa;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+section {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+}
+
+input, textarea, select {
+    width: 80%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #008cff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #006edc;
+}
+
+#selectedRecipe {
+    font-size: 18px;
+    color: #444;
+}
+

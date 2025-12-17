@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وصفاتك العشوائية</title>
+
+    <!-- مسار CSS بعد إصلاحه (ملفات داخل نفس المجلد) -->
+    <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+    <h1>🎉 وصفاتك العشوائية</h1>
+
+    <section class="add-recipe">
+        <h2>إضافة وصفة</h2>
+        <input id="recipeName" placeholder="اسم الوصفة">
+        <textarea id="recipeIngredients" placeholder="المكونات (افصل بينها بفواصل)"></textarea>
+        <label>التصنيف:</label>
+        <select id="recipeCategory">
+            <option value="فطور">فطور</option>
+            <option value="غداء">غداء</option>
+            <option value="عشاء">عشاء</option>
+            <option value="سناك">سناك</option>
+        </select>
+        <button onclick="addRecipe()">إضافة</button>
+    </section>
+
+    <section class="filters">
+        <h2>اختيار وصفة</h2>
+        <label>التصنيف:</label>
+        <select id="filterCategory">
+            <option value="">بدون تصنيف</option>
+            <option value="فطور">فطور</option>
+            <option value="غداء">غداء</option>
+            <option value="عشاء">عشاء</option>
+            <option value="سناك">سناك</option>
+        </select>
+        <input id="mustHave" placeholder="يجب أن تحتوي على (اختياري)">
+        <input id="mustNotHave" placeholder="لا تحتوي على (اختياري)">
+        <button onclick="getRandomRecipe()">أعطني وصفة عشوائية</button>
+    </section>
+
+    <section class="result">
+        <h2>الوصفة المختارة:</h2>
+        <p id="selectedRecipe">—</p>
+    </section>
+
+    <!-- مسار JS بعد إصلاحه -->
+    <script src="./app.js"></script>
+</body>
+</html>
+
+
