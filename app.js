@@ -93,6 +93,8 @@ function getRandomRecipe() {
     `;
 }
 
+
+
   const r = filtered[Math.floor(Math.random() * filtered.length)];
   selectedRecipe.innerHTML = `${r.name}<br>${r.ingredients.join(", ")}<br>${r.meal}<br>${r.image ? `<img src="${r.image}">` : ""}`;
 }
