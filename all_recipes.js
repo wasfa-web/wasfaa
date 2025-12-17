@@ -42,7 +42,7 @@ function editRecipe(index) {
   if (!newName) return;
 
   const newIngredients = prompt(
-    "المكونات (مفصولة بمسافة أو فاصلة)",
+    "المكونات (افصل بينها بمسافة أو فاصلة)",
     recipes[index].ingredients.join(" ")
   );
   if (!newIngredients) return;
