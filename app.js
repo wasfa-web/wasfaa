@@ -8,10 +8,9 @@ recipes = recipes.map(r => {
     if (!r.ingredients || !Array.isArray(r.ingredients)) r.ingredients = [];
     return r;
 });
-
 localStorage.setItem("recipes", JSON.stringify(recipes));
 
-// دالة تفكيك المكونات بدقة
+// تفكيك المكونات بدقة
 function parseIngredients(input) {
     input = input.replace(/[,،]/g, ' ');
     return input.split(/\s+/).map(i => i.trim()).filter(i => i.length > 0);
@@ -43,7 +42,6 @@ function addRecipe() {
     }
 
     const imageFile = document.getElementById("recipeImage").files[0];
-
     if (imageFile) {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -77,8 +75,8 @@ function getRandomRecipe() {
     let filtered = recipes;
 
     if (selectedCategory) filtered = filtered.filter(r => r.category.includes(selectedCategory));
-    if (mustHave) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase() === mustHave));
-    if (mustNotHave) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase() === mustNotHave));
+    if (mustHave) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase().includes(mustHave)));
+    if (mustNotHave) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase().includes(mustNotHave)));
 
     if (filtered.length === 0) {
         document.getElementById("selectedRecipe").innerHTML = "لا توجد وصفة مطابقة 😢";
@@ -86,7 +84,6 @@ function getRandomRecipe() {
     }
 
     const random = filtered[Math.floor(Math.random() * filtered.length)];
-
     const recipeHTML = `${random.image ? `<img src="${random.image}" alt="صورة الوصفة" style="max-width:100%;border-radius:10px;margin-bottom:10px;">` : ''}
         <h3>${random.name}</h3>
         <p>المكونات: ${random.ingredients.join(", ")}</p>
@@ -114,11 +111,10 @@ function applyUserSettings() {
 
     const theme = localStorage.getItem("theme") || "white";
     document.getElementById("themeSelector").value = theme;
-    document.body.className = ""; // إزالة أي ثيم سابق
+    document.body.className = ""; 
     document.body.classList.add(`theme-${theme}`);
 }
 
-// عند تحميل الصفحة
 window.onload = () => {
     updateIngredientSuggestions();
     applyUserSettings();
