@@ -3,6 +3,7 @@ let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
 
 function render() {
   list.innerHTML = "";
+
   if (!recipes.length) {
     list.innerHTML = "<p>لا توجد وصفات</p>";
     return;
@@ -12,13 +13,15 @@ function render() {
     list.innerHTML += `
       <div class="card recipe-item">
         <h3>${r.name}</h3>
-        <p>${r.ingredients.join(", ")}</p>
-        <p>${r.meal}</p>
-        ${r.image ? `<img src="${r.image}">` : ""}
+        <p><strong>المكونات:</strong> ${r.ingredients.join(", ")}</p>
+        <p><strong>نوع الوجبة:</strong> ${r.meal}</p>
+        ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
 
-        <button onclick="editRecipe(${i})">✏️ تعديل</button>
-        <button onclick="deleteRecipe(${i})">🗑 حذف</button>
-        <button onclick="shareRecipe(${i})">📤 مشاركة</button>
+        <div style="display:flex; justify-content: space-between; margin-top:8px;">
+          <button onclick="editRecipe(${i})">✏️ تعديل</button>
+          <button onclick="deleteRecipe(${i})">🗑 حذف</button>
+          <button onclick="shareRecipe(${i})">📤 مشاركة</button>
+        </div>
       </div>
     `;
   });
@@ -34,8 +37,10 @@ function deleteRecipe(i) {
 function editRecipe(i) {
   const name = prompt("اسم الوصفة", recipes[i].name);
   if (!name) return;
-  const ing = prompt("المكونات", recipes[i].ingredients.join(", "));
+
+  const ing = prompt("المكونات (افصل بينهم بفاصلة)", recipes[i].ingredients.join(", "));
   if (!ing) return;
+
   const meal = prompt("نوع الوجبة", recipes[i].meal);
   if (!meal) return;
 
