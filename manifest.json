@@ -4,17 +4,17 @@
   "start_url": "./",
   "display": "standalone",
   "background_color": "#e8f7fb",
-  "theme_color": "#4db6d6"
+  "theme_color": "#4db6d6",
+  "icons": [
+    {
+      "src": "وصفة مميزة للطهي.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "وصفة مميزة للطهي.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
-"icons": [
-  {
-    "src": "وصفة مميزة للطهي.png",
-    "sizes": "192x192",
-    "type": "image/png"
-  },
-  {
-    "src": "وصفة مميزة للطهي.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }
-]
