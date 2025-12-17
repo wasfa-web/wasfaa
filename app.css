@@ -34,6 +34,13 @@
   --btnText: #121212;   /* نص الأزرار */
 }
 
+/* تحسين ظل البطاقات فقط */
+[data-theme="dark"] .card {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+}
+
 
 
 #appTitle {
