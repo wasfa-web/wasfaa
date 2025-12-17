@@ -1,44 +1,62 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وصفاتك العشوائية</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>وصفاتك</title>
 
-    <link rel="stylesheet" href="app.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4db6d6">
+  <link rel="stylesheet" href="app.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1f2933">
 </head>
 <body>
 
-<h1 id="welcomeTitle">🧑‍🍳 وصفاتك العشوائية</h1>
+<header class="top">
+  <h1 id="appTitle" contenteditable="true"></h1>
 
-<section class="add-recipe">
+  <select id="themeSelector">
+    <option value="signature">احترافي</option>
+    <option value="light">أبيض</option>
+    <option value="dark">داكن</option>
+    <option value="pink">زهري</option>
+  </select>
+</header>
+
+<main class="stack">
+
+  <section class="card">
     <h2>إضافة وصفة</h2>
+
     <input id="recipeName" placeholder="اسم الوصفة">
     <textarea id="recipeIngredients" placeholder="المكونات"></textarea>
+    <input type="file" id="recipeImage" accept="image/*">
 
-    <label><input type="checkbox" name="recipeCategory" value="فطور"> فطور</label>
-    <label><input type="checkbox" name="recipeCategory" value="غداء"> غداء</label>
-    <label><input type="checkbox" name="recipeCategory" value="عشاء"> عشاء</label>
+    <div class="cats">
+      <label><input type="checkbox" value="فطور"> فطور</label>
+      <label><input type="checkbox" value="غداء"> غداء</label>
+      <label><input type="checkbox" value="عشاء"> عشاء</label>
+    </div>
 
     <button onclick="addRecipe()">إضافة</button>
-</section>
+  </section>
 
-<section class="filters">
-    <input id="mustHave" placeholder="يجب أن تحتوي على" list="ingredientsList">
-    <input id="mustNotHave" placeholder="لا تحتوي على" list="ingredientsList">
-    <datalist id="ingredientsList"></datalist>
+  <section class="card">
+    <h2>اختيار ذكي</h2>
+
+    <input id="mustHave" placeholder="يجب أن تحتوي على">
+    <input id="mustNotHave" placeholder="لا تحتوي على">
+
     <button onclick="getRandomRecipe()">وصفة عشوائية</button>
-</section>
+  </section>
 
-<section class="result">
+  <section class="card result">
     <div id="selectedRecipe">—</div>
-</section>
+  </section>
+
+</main>
 
 <footer>
-    <span id="devEmoji">👨‍💻</span>
-    صنع المبرمج القدير محمد
+  Crafted with care
 </footer>
 
 <script src="app.js"></script>
