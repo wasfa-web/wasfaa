@@ -1,18 +1,13 @@
 {
   "name": "وصفاتك",
   "short_name": "وصفات",
-  "start_url": "./",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#e8f7fb",
   "theme_color": "#4db6d6",
   "icons": [
     {
-      "src": "recipe-icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "recipe-icon-512.png",
+      "src": "recipe-icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
