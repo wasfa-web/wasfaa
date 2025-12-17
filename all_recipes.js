@@ -73,17 +73,10 @@ const ingredientEmojis = {
   "عصير فراولة":"🍓","عصير تفاح أحمر":"🍎","عصير برتقال طبيعي":"🧃","موهيتو فواكه":"🍸",
   "كوكتيل فواكه":"🍹","شاي مثلج":"🍹","قهوة مثلجة":"☕","لاتيه مثلج":"☕","كابتشينو مثلج":"☕"
 };
+
 function addEmojisToIngredients(ingredients) {
   return ingredients.map(i => ingredientEmojis[i] || i).join(", ");
 }
-
-// مثال داخل render أو عند اختيار وصفة عشوائية
-selectedRecipe.innerHTML = `
-  <div class="recipe-box"><h2>${r.name}</h2></div>
-  ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
-  <div class="recipe-box"><p><strong>المكونات:</strong> ${addEmojisToIngredients(r.ingredients)}</p></div>
-  <div class="recipe-box"><p><strong>نوع الوجبة:</strong> ${r.meal || "—"}</p></div>
-`;
 
 const list = document.getElementById("allRecipes");
 let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
@@ -100,7 +93,7 @@ function render() {
     list.innerHTML += `
       <div class="card recipe-item">
         <h3>${r.name}</h3>
-        <p><strong>المكونات:</strong> ${r.ingredients.join(", ")}</p>
+        <p><strong>المكونات:</strong> ${addEmojisToIngredients(r.ingredients)}</p>
         <p><strong>نوع الوجبة:</strong> ${r.meal}</p>
         ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
 
@@ -141,26 +134,20 @@ function editRecipe(i) {
 
 function shareRecipe(i) {
   const r = recipes[i];
+  const text = `الوصفة: ${r.name}\nالمكونات: ${addEmojisToIngredients(r.ingredients)}\nنوع الوجبة: ${r.meal}`;
+  
   if (navigator.canShare && r.image) {
     fetch(r.image)
       .then(res => res.blob())
       .then(blob => {
         const file = new File([blob], `${r.name}.png`, { type: blob.type });
-        navigator.share({
-          title: r.name,
-          text: `الوصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`,
-          files: [file]
-        }).catch(console.error);
+        navigator.share({ title: r.name, text, files: [file] }).catch(console.error);
       });
+  } else if (navigator.share) {
+    navigator.share({ title: r.name, text }).catch(console.error);
   } else {
-    const text = `الوصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`;
-    if (navigator.share) {
-      navigator.share({ title: r.name, text }).catch(console.error);
-    } else {
-      prompt("انسخ هذه الوصفة وشاركها:", text);
-    }
+    prompt("انسخ هذه الوصفة وشاركها:", text);
   }
 }
-
 
 render();
