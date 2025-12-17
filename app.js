@@ -1,15 +1,6 @@
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
-}
-
-let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
-
-const selectedRecipe = document.getElementById("selectedRecipe");
-const mustHave = document.getElementById("mustHave");
-const mustNotHave = document.getElementById("mustNotHave");
-const filterMeal = document.getElementById("filterMeal");
-const themeSelector = document.getElementById("themeSelector");
-
+// ---------------------------------------------
+// قائمة الإيموجي لكل مكون
+// ---------------------------------------------
 const ingredientEmojis = {
   // فواكه
   "موز":"🍌","تفاح":"🍎","برتقال":"🍊","ليمون":"🍋","فراولة":"🍓",
@@ -65,66 +56,107 @@ const ingredientEmojis = {
   "برياني":"🍛","طاجن":"🍲","مرق":"🍲","شوربة عدس":"🥣","سمبوسة":"🥟"
 };
 
-
-function addEmojisToIngredients(arr) {
-  return arr.map(i => ingredientEmojis[i] || i).join(", ");
+// ---------------------------------------------
+// دالة لتحويل المكونات لإيموجي
+// ---------------------------------------------
+function addEmojisToIngredients(ingredients) {
+  return ingredients.map(i => ingredientEmojis[i] || i).join(", ");
 }
 
-function addRecipe() {
-  const name = recipeName.value.trim();
-  const ingredients = recipeIngredients.value.split(/[,،]\s*/);
-  const meal = mealType.value;
-  const file = recipeImage.files[0];
+// ---------------------------------------------
+// تحميل الوصفات من localStorage
+// ---------------------------------------------
+let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 
-  if (!name || !ingredients.length) return alert("أدخل البيانات");
+// ---------------------------------------------
+// عناصر الصفحة
+// ---------------------------------------------
+const selectedRecipe = document.getElementById("selectedRecipe");
+const mustHave = document.getElementById("mustHave");
+const mustNotHave = document.getElementById("mustNotHave");
+const filterMeal = document.getElementById("filterMeal");
+const themeSelector = document.getElementById("themeSelector");
 
-  const save = image => {
-    recipes.push({ name, ingredients, meal, image });
-    localStorage.setItem("recipes", JSON.stringify(recipes));
-    recipeName.value = recipeIngredients.value = "";
-    recipeImage.value = "";
-    updateIngredientSuggestions();
-    alert("تمت الإضافة ✅");
-  };
+// ---------------------------------------------
+// تحميل الثيم من localStorage
+// ---------------------------------------------
+const savedTheme = localStorage.getItem("theme") || "cyan";
+document.body.setAttribute("data-theme", savedTheme);
+if(themeSelector) themeSelector.value = savedTheme;
 
-  if (file) {
-    const r = new FileReader();
-    r.onload = () => save(r.result);
-    r.readAsDataURL(file);
-  } else save("");
+// تغيير الثيم عند اختيار المستخدم
+if(themeSelector){
+  themeSelector.addEventListener("change", () => {
+    const theme = themeSelector.value;
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  });
 }
 
+// ---------------------------------------------
+// عرض وصفة عشوائية مع إيموجي
+// ---------------------------------------------
 function getRandomRecipe() {
   let filtered = [...recipes];
-  if (mustHave.value)
-    filtered = filtered.filter(r => r.ingredients.some(i => i.includes(mustHave.value)));
-  if (mustNotHave.value)
-    filtered = filtered.filter(r => !r.ingredients.some(i => i.includes(mustNotHave.value)));
-  if (filterMeal.value)
-    filtered = filtered.filter(r => r.meal === filterMeal.value);
+  const must = mustHave.value.toLowerCase();
+  const not = mustNotHave.value.toLowerCase();
+  const mealFilter = filterMeal.value;
+
+  if (must) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase().includes(must)));
+  if (not) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase().includes(not)));
+  if (mealFilter) filtered = filtered.filter(r => r.meal === mealFilter);
 
   if (!filtered.length) {
-    selectedRecipe.innerHTML = "لا توجد وصفة";
+    selectedRecipe.innerHTML = "<p>لا توجد وصفة</p>";
     return;
   }
 
   const r = filtered[Math.floor(Math.random() * filtered.length)];
+
   selectedRecipe.innerHTML = `
-    <h2>${r.name}</h2>
-    ${r.image ? `<img src="${r.image}">` : ""}
-    <p>${addEmojisToIngredients(r.ingredients)}</p>
-    <p>${r.meal}</p>
+    <div class="recipe-box"><h2>${r.name}</h2></div>
+    ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
+    <div class="recipe-box"><p><strong>المكونات:</strong> ${addEmojisToIngredients(r.ingredients)}</p></div>
+    <div class="recipe-box"><p><strong>نوع الوجبة:</strong> ${r.meal || "—"}</p></div>
   `;
 }
 
+// ---------------------------------------------
+// الاقتراح التلقائي عند الكتابة
+// ---------------------------------------------
+mustHave?.addEventListener("input", () => filterSuggestions(mustHave));
+mustNotHave?.addEventListener("input", () => filterSuggestions(mustNotHave));
+
+function filterSuggestions(input) {
+  const allIngredients = [...new Set(recipes.flatMap(r => r.ingredients))];
+  const value = input.value.toLowerCase();
+  const filtered = allIngredients.filter(i => i.toLowerCase().includes(value));
+
+  if (!filtered.length && value.length) {
+    input.setCustomValidity("لا يوجد مكون بهذا الاسم");
+    input.reportValidity();
+  } else input.setCustomValidity("");
+
+  const list = document.getElementById(input.getAttribute("list"));
+  list.innerHTML = "";
+  filtered.forEach(i => {
+    const option = document.createElement("option");
+    option.value = i;
+    list.appendChild(option);
+  });
+}
+
+// ---------------------------------------------
+// تحميل قائمة المكونات عند فتح الصفحة
+// ---------------------------------------------
 function updateIngredientSuggestions() {
   const list = document.getElementById("ingredientsList");
+  if(!list) return;
   list.innerHTML = "";
   [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
-    const o = document.createElement("option");
-    o.value = i;
-    list.appendChild(o);
+    const option = document.createElement("option");
+    option.value = i;
+    list.appendChild(option);
   });
 }
 updateIngredientSuggestions();
-
