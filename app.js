@@ -3,7 +3,6 @@ let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 /* العنوان */
 const appTitle = document.getElementById("appTitle");
 const titleEditor = document.getElementById("titleEditor");
-
 appTitle.innerText = localStorage.getItem("title") || "وصفاتك";
 
 function saveTitle() {
@@ -24,7 +23,7 @@ themeSelector.onchange = () => {
   localStorage.setItem("theme", themeSelector.value);
 };
 
-/* اقتراحات المكونات */
+/* اقتراحات */
 function updateIngredientSuggestions() {
   ingredientsList.innerHTML = "";
   [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
@@ -34,7 +33,7 @@ function updateIngredientSuggestions() {
   });
 }
 
-/* إضافة وصفة (الصورة اختيارية) */
+/* إضافة */
 function addRecipe() {
   const name = recipeName.value.trim();
   const ingredients = recipeIngredients.value
@@ -46,14 +45,7 @@ function addRecipe() {
   const meal = mealType.value;
   if (!name || !ingredients.length || !meal) return;
 
-  const recipe = {
-    id: Date.now(),
-    name,
-    ingredients,
-    meal,
-    image: null
-  };
-
+  const recipe = { id: Date.now(), name, ingredients, meal, image: null };
   const file = recipeImage.files[0];
 
   if (file) {
@@ -79,7 +71,7 @@ function saveRecipe(recipe) {
   mealType.value = "";
 }
 
-/* عشوائي + فلترة */
+/* عشوائي */
 function getRandomRecipe() {
   let filtered = [...recipes];
 
@@ -92,12 +84,11 @@ function getRandomRecipe() {
   if (not) filtered = filtered.filter(r => !r.ingredients.some(i => i.includes(not)));
 
   if (!filtered.length) {
-    selectedRecipe.innerText = "لا توجد وصفة مناسبة";
+    selectedRecipe.innerText = "لا توجد وصفة";
     return;
   }
 
   const r = filtered[Math.floor(Math.random() * filtered.length)];
-
   selectedRecipe.innerHTML = `
     <h3>${r.name} (${r.meal})</h3>
     ${r.image ? `<img src="${r.image}">` : ""}
@@ -114,7 +105,6 @@ function deleteRecipe(id) {
 
 updateIngredientSuggestions();
 
-/* Service Worker */
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
 }
