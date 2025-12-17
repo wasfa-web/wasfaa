@@ -13,13 +13,15 @@
         <h2>إضافة وصفة</h2>
         <input id="recipeName" placeholder="اسم الوصفة">
         <textarea id="recipeIngredients" placeholder="المكونات (افصل بينها بفواصل)"></textarea>
-        <label>التصنيف:</label>
-        <select id="recipeCategory">
-            <option value="فطور">فطور</option>
-            <option value="غداء">غداء</option>
-            <option value="عشاء">عشاء</option>
-            <option value="سناك">سناك</option>
-        </select>
+        <div class="category-section">
+            <label>التصنيفات:</label><br>
+            <label><input type="checkbox" name="recipeCategory" value="فطور"> فطور</label>
+            <label><input type="checkbox" name="recipeCategory" value="غداء"> غداء</label>
+            <label><input type="checkbox" name="recipeCategory" value="عشاء"> عشاء</label>
+            <label><input type="checkbox" name="recipeCategory" value="سناك"> سناك</label>
+        </div>
+        <label>صورة الوصفة (اختياري):</label>
+        <input type="file" id="recipeImage" accept="image/*">
         <button onclick="addRecipe()">إضافة</button>
     </section>
 
@@ -33,19 +35,17 @@
             <option value="عشاء">عشاء</option>
             <option value="سناك">سناك</option>
         </select>
-        <input id="mustHave" placeholder="يجب أن تحتوي على (اختياري)">
+        <input id="mustHave" placeholder="يجب أن تحتوي على (اختياري)" list="ingredientsList">
+        <datalist id="ingredientsList"></datalist>
         <input id="mustNotHave" placeholder="لا تحتوي على (اختياري)">
         <button onclick="getRandomRecipe()">أعطني وصفة عشوائية</button>
     </section>
 
     <section class="result">
         <h2>الوصفة المختارة:</h2>
-        <p id="selectedRecipe">—</p>
+        <div id="selectedRecipe">—</div>
     </section>
 
     <script src="app.js"></script>
 </body>
 </html>
-
-
-
