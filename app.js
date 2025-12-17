@@ -1,25 +1,42 @@
 let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 
-// تحديث قائمة الاقتراحات تلقائيًا
+// تحويل أي وصفة قديمة لتتناسب مع النظام الجديد
+recipes = recipes.map(r => {
+    if (r.category && typeof r.category === "string") r.category = [r.category];
+    else if (!r.category) r.category = [];
+    if (!r.image) r.image = null;
+    if (!r.ingredients || !Array.isArray(r.ingredients)) r.ingredients = [];
+    return r;
+});
+
+localStorage.setItem("recipes", JSON.stringify(recipes));
+
+// دالة تفكيك المكونات بدقة
+function parseIngredients(input) {
+    // استبدال جميع الفواصل العربية والفواصل الأجنبية بمسافة واحدة
+    input = input.replace(/[,،]/g, ' ');
+
+    // تقسيم النص حسب المسافات، وحذف الفراغات الفارغة
+    return input.split(/\s+/).map(i => i.trim()).filter(i => i.length > 0);
+}
+
+// تحديث الاقتراحات التلقائية
 function updateIngredientSuggestions() {
     const datalist = document.getElementById("ingredientsList");
     datalist.innerHTML = "";
-
     const ingredientsSet = new Set();
     recipes.forEach(r => r.ingredients.forEach(i => ingredientsSet.add(i)));
-
-    ingredientsSet.forEach(ingredient => {
+    ingredientsSet.forEach(i => {
         const option = document.createElement("option");
-        option.value = ingredient;
+        option.value = i;
         datalist.appendChild(option);
     });
 }
 
+// إضافة وصفة جديدة
 function addRecipe() {
     const name = document.getElementById("recipeName").value.trim();
-    const ingredients = document.getElementById("recipeIngredients").value
-                        .trim().split(",").map(i => i.trim()).filter(i => i);
-    
+    const ingredients = parseIngredients(document.getElementById("recipeIngredients").value);
     const category = Array.from(document.querySelectorAll('input[name="recipeCategory"]:checked'))
                           .map(c => c.value);
 
@@ -33,8 +50,7 @@ function addRecipe() {
     if (imageFile) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const imageData = e.target.result;
-            saveRecipe(name, ingredients, category, imageData);
+            saveRecipe(name, ingredients, category, e.target.result);
         };
         reader.readAsDataURL(imageFile);
     } else {
@@ -45,8 +61,7 @@ function addRecipe() {
 function saveRecipe(name, ingredients, category, imageData) {
     recipes.push({ name, ingredients, category, image: imageData });
     localStorage.setItem("recipes", JSON.stringify(recipes));
-
-    updateIngredientSuggestions(); // تحديث الاقتراحات بعد إضافة وصفة
+    updateIngredientSuggestions();
 
     alert("تمت إضافة الوصفة 👌");
 
@@ -56,6 +71,7 @@ function saveRecipe(name, ingredients, category, imageData) {
     document.getElementById("recipeImage").value = "";
 }
 
+// اختيار وصفة عشوائية مع الفلاتر
 function getRandomRecipe() {
     const selectedCategory = document.getElementById("filterCategory").value;
     const mustHave = document.getElementById("mustHave").value.trim().toLowerCase();
@@ -63,16 +79,14 @@ function getRandomRecipe() {
 
     let filtered = recipes;
 
-    if (selectedCategory) {
-        filtered = filtered.filter(r => r.category.includes(selectedCategory));
-    }
+    if (selectedCategory) filtered = filtered.filter(r => r.category.includes(selectedCategory));
 
     if (mustHave) {
-        filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase().includes(mustHave)));
+        filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase() === mustHave));
     }
 
     if (mustNotHave) {
-        filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase().includes(mustNotHave)));
+        filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase() === mustNotHave));
     }
 
     if (filtered.length === 0) {
@@ -86,9 +100,8 @@ function getRandomRecipe() {
         <h3>${random.name}</h3>
         <p>المكونات: ${random.ingredients.join(", ")}</p>
         <p>التصنيفات: ${random.category.join(", ")}</p>`;
-    
+
     document.getElementById("selectedRecipe").innerHTML = recipeHTML;
 }
 
-// عند تحميل الصفحة، تحديث الاقتراحات
 window.onload = updateIngredientSuggestions;
