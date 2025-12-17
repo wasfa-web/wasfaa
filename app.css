@@ -4,6 +4,7 @@ body {
     background: #f5f5f5;
     text-align: center;
     padding: 20px;
+    transition: background 0.3s, color 0.3s;
 }
 
 h1 {
@@ -59,4 +60,36 @@ button:hover {
 img {
     max-width: 100%;
     border-radius: 10px;
+}
+
+.user-settings {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* الثيمات */
+body.theme-white {
+    background: #f5f5f5;
+    color: #222;
+}
+
+body.theme-dark {
+    background: #222;
+    color: #f5f5f5;
+}
+
+body.theme-dark section {
+    background: #333;
+    color: #f5f5f5;
+}
+
+body.theme-pink {
+    background: #ffe6f0;
+    color: #222;
+}
+
+body.theme-pink section {
+    background: #fff0f8;
 }
