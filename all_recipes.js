@@ -75,6 +75,5 @@ function shareRecipe(i) {
   }
 }
 
-}
 
 render();
