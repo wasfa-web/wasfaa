@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>وصفاتي</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body data-theme="cyan">
+
+  <div class="top">
+    <h1>وصفاتي</h1>
+    <button onclick="location.href='index.html'">🏠 الرئيسية</button>
+  </div>
+
+  <main class="stack">
+    <div id="allRecipes"></div>
+  </main>
+
+  <script>
+    const list = document.getElementById("allRecipes");
+    let recipes = JSON.parse(localStorage.getItem("recipes")) || [];
+
+    function render() {
+      list.innerHTML = "";
+
+      if (recipes.length === 0) {
+        list.innerHTML = "<p>لا توجد وصفات</p>";
+        return;
+      }
+
+      recipes.forEach((r, i) => {
+        list.innerHTML += `
+          <div class="card recipe-item">
+            <h3>${r.name}</h3>
+            <p>${r.ingredients}</p>
+            ${r.image ? `<img src="${r.image}">` : ""}
+
+            <button onclick="editRecipe(${i})">✏️ تعديل</button>
+            <button onclick="deleteRecipe(${i})">🗑 حذف</button>
+          </div>
+        `;
+      });
+    }
+
+    function deleteRecipe(i) {
+      if (!confirm("هل أنت متأكد من الحذف؟")) return;
+      recipes.splice(i, 1);
+      localStorage.setItem("recipes", JSON.stringify(recipes));
+      render();
+    }
+
+    function editRecipe(i) {
+      const name = prompt("اسم الوصفة", recipes[i].name);
+      if (!name) return;
+
+      const ing = prompt("المكونات", recipes[i].ingredients);
+      if (!ing) return;
+
+      recipes[i].name = name;
+      recipes[i].ingredients = ing;
+
+      localStorage.setItem("recipes", JSON.stringify(recipes));
+      render();
+    }
+
+    render();
+  </script>
+
+</body>
+</html>
