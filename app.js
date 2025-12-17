@@ -64,7 +64,8 @@ const ingredientEmojis = {
 // دالة لتحويل المكونات لإيموجي
 // ---------------------------------------------
 function addEmojisToIngredients(ingredients) {
-  return ingredients.map(i => ingredientEmojis[i] || i).join(", ");
+  // نتأكد أن كل عنصر بدون فراغات ويحول للإيموجي إذا موجود
+  return ingredients.map(i => ingredientEmojis[i.trim()] || i.trim()).join(", ");
 }
 
 // ---------------------------------------------
