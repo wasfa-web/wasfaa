@@ -2,22 +2,39 @@ let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 
 /* العنوان */
 const appTitle = document.getElementById("appTitle");
+const titleEditor = document.getElementById("titleEditor");
+
 appTitle.innerText = localStorage.getItem("title") || "وصفاتك";
-appTitle.oninput = () =>
-  localStorage.setItem("title", appTitle.innerText);
+
+function saveTitle() {
+  if (!titleEditor.value.trim()) return;
+  localStorage.setItem("title", titleEditor.value);
+  appTitle.innerText = titleEditor.value;
+  titleEditor.value = "";
+}
 
 /* الثيم */
-const selector = document.getElementById("themeSelector");
+const themeSelector = document.getElementById("themeSelector");
 const savedTheme = localStorage.getItem("theme") || "signature";
 document.documentElement.setAttribute("data-theme", savedTheme);
-selector.value = savedTheme;
+themeSelector.value = savedTheme;
 
-selector.onchange = () => {
-  document.documentElement.setAttribute("data-theme", selector.value);
-  localStorage.setItem("theme", selector.value);
+themeSelector.onchange = () => {
+  document.documentElement.setAttribute("data-theme", themeSelector.value);
+  localStorage.setItem("theme", themeSelector.value);
 };
 
-/* إضافة */
+/* اقتراحات المكونات */
+function updateIngredientSuggestions() {
+  ingredientsList.innerHTML = "";
+  [...new Set(recipes.flatMap(r => r.ingredients))].forEach(i => {
+    const o = document.createElement("option");
+    o.value = i;
+    ingredientsList.appendChild(o);
+  });
+}
+
+/* إضافة وصفة (الصورة اختيارية) */
 function addRecipe() {
   const name = recipeName.value.trim();
   const ingredients = recipeIngredients.value
@@ -26,57 +43,76 @@ function addRecipe() {
     .split(/\s+/)
     .filter(Boolean);
 
-  if (!name || !ingredients.length) return;
+  const meal = mealType.value;
+  if (!name || !ingredients.length || !meal) return;
 
-  const file = recipeImage.files[0];
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    recipes.push({
-      id: Date.now(),
-      name,
-      ingredients,
-      image: reader.result
-    });
-
-    localStorage.setItem("recipes", JSON.stringify(recipes));
-    recipeName.value = "";
-    recipeIngredients.value = "";
-    recipeImage.value = "";
+  const recipe = {
+    id: Date.now(),
+    name,
+    ingredients,
+    meal,
+    image: null
   };
 
-  if (file) reader.readAsDataURL(file);
+  const file = recipeImage.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      recipe.image = reader.result;
+      saveRecipe(recipe);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    saveRecipe(recipe);
+  }
 }
 
-/* عشوائي */
-function getRandomRecipe() {
-  if (!recipes.length) return;
+function saveRecipe(recipe) {
+  recipes.push(recipe);
+  localStorage.setItem("recipes", JSON.stringify(recipes));
+  updateIngredientSuggestions();
 
-  const r = recipes[Math.floor(Math.random() * recipes.length)];
+  recipeName.value = "";
+  recipeIngredients.value = "";
+  recipeImage.value = "";
+  mealType.value = "";
+}
+
+/* عشوائي + فلترة */
+function getRandomRecipe() {
+  let filtered = [...recipes];
+
+  const must = mustHave.value.toLowerCase();
+  const not = mustNotHave.value.toLowerCase();
+  const meal = filterMeal.value;
+
+  if (meal) filtered = filtered.filter(r => r.meal === meal);
+  if (must) filtered = filtered.filter(r => r.ingredients.some(i => i.includes(must)));
+  if (not) filtered = filtered.filter(r => !r.ingredients.some(i => i.includes(not)));
+
+  if (!filtered.length) {
+    selectedRecipe.innerText = "لا توجد وصفة مناسبة";
+    return;
+  }
+
+  const r = filtered[Math.floor(Math.random() * filtered.length)];
 
   selectedRecipe.innerHTML = `
-    <h3>${r.name}</h3>
+    <h3>${r.name} (${r.meal})</h3>
     ${r.image ? `<img src="${r.image}">` : ""}
     <p>${r.ingredients.join(", ")}</p>
-    <button onclick="editRecipe(${r.id})">تعديل</button>
     <button onclick="deleteRecipe(${r.id})">حذف</button>
   `;
 }
 
-/* حذف */
 function deleteRecipe(id) {
   recipes = recipes.filter(r => r.id !== id);
   localStorage.setItem("recipes", JSON.stringify(recipes));
   selectedRecipe.innerText = "تم الحذف";
 }
 
-/* تعديل */
-function editRecipe(id) {
-  const r = recipes.find(x => x.id === id);
-  recipeName.value = r.name;
-  recipeIngredients.value = r.ingredients.join(" ");
-  deleteRecipe(id);
-}
+updateIngredientSuggestions();
 
 /* Service Worker */
 if ("serviceWorker" in navigator) {
