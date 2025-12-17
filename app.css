@@ -26,11 +26,11 @@
 
 
 [data-theme="dark"] {
-  --bg: #020617;
-  --card: #0f172a;
-  --text: #e5e7eb;
-  --accent: #22d3ee;
-  --btnText: #020617;
+  --bg: #121212;              /* خلفية عامة داكنة */
+  --card: #1e1e1e;            /* لون المربعات */
+  --text: #e0e0e0;            /* نص واضح */
+  --accent: #bb86fc;          /* ألوان الأزرار والتحديد */
+  --btnText: #ffffff;          /* نص الأزرار */
 }
 
 #appTitle {
