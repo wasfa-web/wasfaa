@@ -1,24 +1,22 @@
 body {
     font-family: "Cairo", Arial, sans-serif;
     direction: rtl;
-    background: #f5f5f5;
     text-align: center;
     padding: 20px;
     transition: background 0.3s, color 0.3s;
 }
 
 h1 {
-    color: #222;
     margin-bottom: 20px;
 }
 
 section {
-    background: #fff;
     padding: 20px;
     margin: 20px auto;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     max-width: 500px;
+    transition: background 0.3s, color 0.3s;
 }
 
 input, textarea, select {
@@ -52,7 +50,6 @@ button:hover {
 
 #selectedRecipe {
     font-size: 18px;
-    color: #444;
     margin-top: 15px;
     white-space: pre-line;
 }
@@ -69,9 +66,14 @@ img {
     margin-bottom: 15px;
 }
 
-/* الثيمات */
+/* ثيمات */
 body.theme-white {
     background: #f5f5f5;
+    color: #222;
+}
+
+body.theme-white section {
+    background: #fff;
     color: #222;
 }
 
@@ -92,4 +94,5 @@ body.theme-pink {
 
 body.theme-pink section {
     background: #fff0f8;
+    color: #222;
 }
