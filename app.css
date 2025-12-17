@@ -42,15 +42,19 @@
 
 
 #appTitle {
-  text-align: center;       /* لجعل النص في الوسط */
-  font-size: 24px;          /* حجم أكبر */
+  text-align: center;
+  font-size: 24px;
   font-weight: 600;
   border: 2px solid var(--accent);
   border-radius: 12px;
   padding: 10px;
   width: 90%;
-  margin: 10px auto;        /* لجعل الحقل في المنتصف */
+  margin: 10px auto;
   display: block;
+
+  user-select: none; /* يمنع تحديد النص عند اللمس أو الضغط العرضي */
+}
+
 }
 input, textarea { 
   border: 2px solid var(--accent); 
