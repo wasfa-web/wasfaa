@@ -54,12 +54,27 @@ function editRecipe(i) {
 
 function shareRecipe(i) {
   const r = recipes[i];
-  const text = `الوصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`;
-  if (navigator.share) {
-    navigator.share({ title: r.name, text: text }).catch(console.error);
+  if (navigator.canShare && r.image) {
+    fetch(r.image)
+      .then(res => res.blob())
+      .then(blob => {
+        const file = new File([blob], `${r.name}.png`, { type: blob.type });
+        navigator.share({
+          title: r.name,
+          text: `الوصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`,
+          files: [file]
+        }).catch(console.error);
+      });
   } else {
-    prompt("انسخ هذه الوصفة وشاركها:", text);
+    const text = `الوصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`;
+    if (navigator.share) {
+      navigator.share({ title: r.name, text }).catch(console.error);
+    } else {
+      prompt("انسخ هذه الوصفة وشاركها:", text);
+    }
   }
+}
+
 }
 
 render();
