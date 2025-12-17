@@ -18,6 +18,7 @@ function addRecipe() {
   const name = recipeName.value.trim();
   const ingredients = parseIngredients(recipeIngredients.value);
   const imageInput = document.getElementById("recipeImage");
+  const meal = document.getElementById("mealType").value;
 
   if (!name || !ingredients.length) return;
 
@@ -34,17 +35,19 @@ function addRecipe() {
       id: Date.now(),
       name,
       ingredients,
-      image: img
+      image: img,
+      meal
     });
     localStorage.setItem("recipes", JSON.stringify(recipes));
     recipeName.value = "";
     recipeIngredients.value = "";
-    recipeImage.value = "";
+    imageInput.value = "";
+    document.getElementById("mealType").value = "";
     updateIngredientSuggestions();
   }
 }
 
-function filterSuggestions(input, isMustHave = true) {
+function filterSuggestions(input) {
   const allIngredients = [...new Set(recipes.flatMap(r => r.ingredients))];
   const value = input.value.toLowerCase();
   const filtered = allIngredients.filter(i => i.toLowerCase().includes(value));
@@ -56,13 +59,12 @@ function filterSuggestions(input, isMustHave = true) {
     input.setCustomValidity("");
   }
 
-  const listId = input.getAttribute("list");
-  const datalist = document.getElementById(listId);
-  datalist.innerHTML = "";
+  const list = document.getElementById(input.getAttribute("list"));
+  list.innerHTML = "";
   filtered.forEach(i => {
     const option = document.createElement("option");
     option.value = i;
-    datalist.appendChild(option);
+    list.appendChild(option);
   });
 }
 
@@ -70,9 +72,11 @@ function getRandomRecipe() {
   let filtered = [...recipes];
   const must = mustHave.value.toLowerCase();
   const not = mustNotHave.value.toLowerCase();
+  const meal = document.getElementById("filterMeal").value;
 
   if (must) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase().includes(must)));
   if (not) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase().includes(not)));
+  if (meal) filtered = filtered.filter(r => r.meal === meal);
 
   if (!filtered.length) {
     selectedRecipe.innerText = "لا توجد وصفة";
@@ -80,11 +84,10 @@ function getRandomRecipe() {
   }
 
   const r = filtered[Math.floor(Math.random() * filtered.length)];
-  selectedRecipe.innerText = `${r.name}\n${r.ingredients.join(", ")}`;
+  selectedRecipe.innerHTML = `${r.name}<br>${r.ingredients.join(", ")}<br>${r.meal}<br>${r.image ? `<img src="${r.image}">` : ""}`;
 }
 
-/* تفعيل الاقتراحات الذكية */
-mustHave.addEventListener("input", () => filterSuggestions(mustHave, true));
-mustNotHave.addEventListener("input", () => filterSuggestions(mustNotHave, false));
+mustHave.addEventListener("input", () => filterSuggestions(mustHave));
+mustNotHave.addEventListener("input", () => filterSuggestions(mustNotHave));
 
 updateIngredientSuggestions();
