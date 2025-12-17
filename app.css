@@ -89,6 +89,31 @@ body {
   border-radius: 14px;
   border: 2px solid var(--accent); /* الحدود حول المربعات */
 }
+/* تصميم البطاقات في صفحة عرض الوصفات */
+.recipe-item {
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: var(--card);
+}
+
+.recipe-item img {
+  max-width: 90%;
+  border-radius: 12px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
+.recipe-item button {
+  width: 30%;
+  margin: 5px 1%;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--btnText);
+  border-radius: 8px;
+}
 
 .recipe-item img {
   max-width: 100%;
