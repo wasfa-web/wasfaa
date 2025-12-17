@@ -5,6 +5,7 @@
   --card: #ffffff;
   --text: #0a3d62;
   --accent: #4db6d6;
+  --btnText: #ffffff;
 }
 
 [data-theme="signature"] {
@@ -12,6 +13,7 @@
   --card: rgba(255,255,255,0.08);
   --text: #e5e7eb;
   --accent: #7dd3fc;
+  --btnText: #0b1220;
 }
 
 [data-theme="cyan"] {
@@ -19,6 +21,7 @@
   --card: #ffffff;
   --text: #0a3d62;
   --accent: #4db6d6;
+  --btnText: #ffffff;
 }
 
 [data-theme="light"] {
@@ -26,13 +29,15 @@
   --card: #ffffff;
   --text: #111;
   --accent: #2563eb;
+  --btnText: #ffffff;
 }
 
 [data-theme="dark"] {
-  --bg: #020617;
-  --card: #0f172a;
-  --text: #e5e7eb;
-  --accent: #22d3ee;
+  --bg: #f1f5f9;        /* خلفية فاتحة بدل الأسود */
+  --card: #ffffff;
+  --text: #0f172a;
+  --accent: #0ea5e9;
+  --btnText: #ffffff;
 }
 
 [data-theme="pink"] {
@@ -40,13 +45,25 @@
   --card: #ffffff;
   --text: #4a154b;
   --accent: #d63384;
+  --btnText: #ffffff;
 }
 
+/* شكل التطبيق الاحترافي */
 body {
   margin: 0;
   font-family: Cairo, sans-serif;
-  background: var(--bg);
+  background: #dbeafe;
   color: var(--text);
+}
+
+.app-shell {
+  max-width: 430px;
+  margin: 20px auto;
+  background: var(--bg);
+  min-height: calc(100vh - 40px);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.15);
+  overflow: hidden;
 }
 
 .top {
@@ -91,33 +108,6 @@ button {
   cursor: pointer;
 }
 
-/* ألوان أزرار حسب الثيم */
-[data-theme="cyan"] {
-  --accent: #4db6d6;
-  --btnText: #ffffff;
-}
-
-[data-theme="signature"] {
-  --accent: #7dd3fc;
-  --btnText: #0b1220;
-}
-
-[data-theme="light"] {
-  --accent: #38bdf8;
-  --btnText: #ffffff;
-}
-
-[data-theme="dark"] {
-  --accent: #22d3ee;
-  --btnText: #020617;
-}
-
-[data-theme="pink"] {
-  --accent: #e91e63;
-  --btnText: #ffffff;
-}
-
-
 .result img, #recipesList img {
   max-width: 100%;
   border-radius: 12px;
@@ -143,12 +133,7 @@ footer {
   padding: 16px;
 }
 
-@media (max-width: 480px) {
-  h1 { font-size: 20px; }
-  .card { padding: 14px; }
-}
-
-/* زر وصفاتي كبير متناسق مع المربعات */
+/* زر وصفاتي كبير */
 .full-width {
   display: flex;
   flex-direction: column;
@@ -163,6 +148,11 @@ footer {
 }
 
 .full-width button {
-  width: 90%; /* تقريبًا نفس عرض المربعات النصية */
-  height: 40px; /* نفس ارتفاع أزرار المربعات */
+  width: 90%;
+  height: 40px;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 20px; }
+  .card { padding: 14px; }
 }
