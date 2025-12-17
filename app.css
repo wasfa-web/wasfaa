@@ -1,22 +1,102 @@
-body {
-    font-family: Cairo, sans-serif;
-    direction: rtl;
-    text-align: center;
-    background: #e8f7fb;
-    color: #0a3d62;
-    padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap');
+
+:root {
+  --bg: #0f172a;
+  --card: #1f2933;
+  --text: #e5e7eb;
+  --accent: #38bdf8;
+  --radius: 14px;
 }
 
-section {
-    background: white;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 12px;
-    max-width: 500px;
+/* ثيم أبيض */
+[data-theme="light"] {
+  --bg: #f4f4f5;
+  --card: #ffffff;
+  --text: #111827;
+  --accent: #2563eb;
+}
+
+/* دارك */
+[data-theme="dark"] {
+  --bg: #020617;
+  --card: #0f172a;
+  --text: #e5e7eb;
+  --accent: #22d3ee;
+}
+
+/* زهري */
+[data-theme="pink"] {
+  --bg: #fff0f6;
+  --card: #ffffff;
+  --text: #4a154b;
+  --accent: #d63384;
+}
+
+/* الثيم الاحترافي الخاص */
+[data-theme="signature"] {
+  --bg: #0b1220;
+  --card: #111827;
+  --text: #d1d5db;
+  --accent: #7dd3fc;
+}
+
+body {
+  margin: 0;
+  font-family: Cairo, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.top {
+  padding: 20px;
+  text-align: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  max-width: 520px;
+  margin: auto;
+}
+
+.card {
+  background: var(--card);
+  padding: 18px;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+}
+
+input, textarea, select, button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-family: inherit;
+}
+
+button {
+  background: var(--accent);
+  color: #000;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  opacity: .9;
+}
+
+.result img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
 }
 
 footer {
-    margin-top: 40px;
-    font-size: 13px;
-    opacity: 0.7;
+  text-align: center;
+  opacity: .5;
+  font-size: 12px;
+  padding: 20px;
 }
