@@ -10,6 +10,16 @@ appTitle.addEventListener("input", () => {
   localStorage.setItem("appTitle", appTitle.value);
 });
 
+// الثيمات
+const themeSelector = document.getElementById("themeSelector");
+document.body.setAttribute("data-theme", localStorage.getItem("theme") || "cyan");
+themeSelector.value = localStorage.getItem("theme") || "cyan";
+
+themeSelector.addEventListener("change", () => {
+  const theme = themeSelector.value;
+  document.body.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+});
 
 function parseIngredients(text) {
   return text.replace(/[,،]/g, " ").split(/\s+/).filter(Boolean);
