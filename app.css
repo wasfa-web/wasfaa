@@ -159,6 +159,14 @@ button {
   border-radius: 12px;
   border: 1px solid #ccc;
 }
+#mustHave, #mustNotHave {
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  margin-top: 8px;
+  font-family: 'Cairo', sans-serif;
+}
 
 footer {
   text-align: center;
