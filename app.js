@@ -143,10 +143,21 @@ function renderRecipe(r) {
   selectedRecipe.innerHTML = `
     <div class="recipe-box"><h2>${r.name}</h2></div>
     ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
-    <div class="recipe-box"><p><strong>المكونات:</strong> ${r.ingredients.join(", ")}</p></div>
-    <div class="recipe-box"><p><strong>نوع الوجبة:</strong> ${r.meal || "—"}</p></div>
+    <div class="recipe-box">
+      <p><strong>المكونات:</strong> 
+        ${r.ingredients.map(i => 
+          ingredientEmojis[i.trim()] 
+            ? `${ingredientEmojis[i.trim()]} ${i.trim()}` 
+            : i.trim()
+        ).join(", ")}
+      </p>
+    </div>
+    <div class="recipe-box">
+      <p><strong>نوع الوجبة:</strong> ${r.meal || "—"}</p>
+    </div>
   `;
 }
+
 
 // ---------------------------------------------
 // عرض وصفة عشوائية
