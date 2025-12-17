@@ -83,7 +83,16 @@ body {
   background: var(--card);
   padding: 16px;
   border-radius: 14px;
+  border: 2px solid var(--accent); /* الحدود حول المربعات */
 }
+
+.recipe-item img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
 
 input, textarea, select, button {
   width: 100%;
