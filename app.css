@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap');
 
 :root {
-  --bg: #0b1220;
-  --card: rgba(255,255,255,0.08);
-  --text: #e5e7eb;
-  --accent: #7dd3fc;
+  --bg: #e8f7fb;
+  --card: #ffffff;
+  --text: #0a3d62;
+  --accent: #4db6d6;
 }
 
 [data-theme="signature"] {
@@ -87,12 +87,25 @@ input, textarea, select, button {
 button {
   background: var(--accent);
   font-weight: 600;
+  cursor: pointer;
 }
 
-.result img {
+.result img, #recipesList img {
   max-width: 100%;
   border-radius: 12px;
   margin-top: 10px;
+}
+
+.recipe-item {
+  border: 1px solid var(--accent);
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.recipe-item button {
+  width: 48%;
+  margin: 4px 1%;
 }
 
 footer {
@@ -102,7 +115,6 @@ footer {
   padding: 16px;
 }
 
-/* موبايل */
 @media (max-width: 480px) {
   h1 { font-size: 20px; }
   .card { padding: 14px; }
