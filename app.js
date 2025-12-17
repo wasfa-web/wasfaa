@@ -1,5 +1,16 @@
 let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 
+const appTitle = document.getElementById("appTitle");
+
+// تحميل الاسم من localStorage عند فتح التطبيق
+appTitle.value = localStorage.getItem("appTitle") || "وصفاتك العشوائية";
+
+// حفظ الاسم عند تغييره
+appTitle.addEventListener("input", () => {
+  localStorage.setItem("appTitle", appTitle.value);
+});
+
+
 function parseIngredients(text) {
   return text.replace(/[,،]/g, " ").split(/\s+/).filter(Boolean);
 }
