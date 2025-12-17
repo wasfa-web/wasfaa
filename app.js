@@ -3,7 +3,7 @@ let recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
 const appTitle = document.getElementById("appTitle");
 
 // تحميل الاسم من localStorage عند فتح التطبيق
-appTitle.value = localStorage.getItem("appTitle") || "وصفاتك العشوائية";
+appTitle.value = localStorage.getItem("appTitle") || "🧑‍🍳 وصفاتك";
 
 // حفظ الاسم عند تغييره
 appTitle.addEventListener("input", () => {
