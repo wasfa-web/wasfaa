@@ -2,79 +2,21 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>وصفاتك</title>
+  <title>وصفاتي</title>
   <link rel="stylesheet" href="app.css">
 </head>
 
 <body data-theme="cyan">
 
-<div class="app-shell">
-
   <div class="top">
-    <h1>🧑‍🍳 وصفاتك</h1>
+    <h1>وصفاتي</h1>
+    <button onclick="location.href='index.html'">🏠 الرئيسية</button>
   </div>
 
   <main class="stack">
-
-    <!-- زر وصفاتي -->
-    <div class="card full-width">
-      <h2>وصفاتي</h2>
-      <button onclick="location.href='all_recipes.html'">عرض كل الوصفات</button>
-    </div>
-
-    <!-- إضافة وصفة -->
-    <section class="card">
-      <h2>إضافة وصفة</h2>
-
-      <input id="recipeName" placeholder="اسم الوصفة">
-      <textarea id="recipeIngredients" placeholder="المكونات"></textarea>
-
-      <select id="mealType">
-        <option value="">نوع الوجبة</option>
-        <option value="فطور">فطور</option>
-        <option value="غداء">غداء</option>
-        <option value="عشاء">عشاء</option>
-        <option value="سناك">سناك</option>
-      </select>
-
-      <input type="file" id="recipeImage" accept="image/*">
-
-      <button onclick="addRecipe()">إضافة</button>
-    </section>
-
-    <!-- فلترة -->
-    <section class="card">
-      <h2>فلترة</h2>
-
-      <input id="mustHave" placeholder="يجب أن تحتوي على" list="ingredientsList">
-      <input id="mustNotHave" placeholder="لا تحتوي على" list="ingredientsList">
-      <datalist id="ingredientsList"></datalist>
-
-      <select id="filterMeal">
-        <option value="">كل الوجبات</option>
-        <option value="فطور">فطور</option>
-        <option value="غداء">غداء</option>
-        <option value="عشاء">عشاء</option>
-        <option value="سناك">سناك</option>
-      </select>
-
-      <button onclick="getRandomRecipe()">وصفة عشوائية</button>
-    </section>
-
-    <!-- نتيجة عشوائية -->
-    <section class="card result">
-      <div id="selectedRecipe">—</div>
-    </section>
-
+    <div id="allRecipes"></div>
   </main>
 
-  <footer>
-    عمل المبرمج القدير محمد🧑‍💻
-  </footer>
-
-</div>
-
-<script src="app.js"></script>
+<script src="all_recipes.js"></script>
 </body>
 </html>
