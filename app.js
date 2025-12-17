@@ -13,14 +13,11 @@ localStorage.setItem("recipes", JSON.stringify(recipes));
 
 // دالة تفكيك المكونات بدقة
 function parseIngredients(input) {
-    // استبدال جميع الفواصل العربية والفواصل الأجنبية بمسافة واحدة
     input = input.replace(/[,،]/g, ' ');
-
-    // تقسيم النص حسب المسافات، وحذف الفراغات الفارغة
     return input.split(/\s+/).map(i => i.trim()).filter(i => i.length > 0);
 }
 
-// تحديث الاقتراحات التلقائية
+// تحديث اقتراحات المكونات التلقائية
 function updateIngredientSuggestions() {
     const datalist = document.getElementById("ingredientsList");
     datalist.innerHTML = "";
@@ -71,7 +68,7 @@ function saveRecipe(name, ingredients, category, imageData) {
     document.getElementById("recipeImage").value = "";
 }
 
-// اختيار وصفة عشوائية مع الفلاتر
+// اختيار وصفة عشوائية
 function getRandomRecipe() {
     const selectedCategory = document.getElementById("filterCategory").value;
     const mustHave = document.getElementById("mustHave").value.trim().toLowerCase();
@@ -80,14 +77,8 @@ function getRandomRecipe() {
     let filtered = recipes;
 
     if (selectedCategory) filtered = filtered.filter(r => r.category.includes(selectedCategory));
-
-    if (mustHave) {
-        filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase() === mustHave));
-    }
-
-    if (mustNotHave) {
-        filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase() === mustNotHave));
-    }
+    if (mustHave) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase() === mustHave));
+    if (mustNotHave) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase() === mustNotHave));
 
     if (filtered.length === 0) {
         document.getElementById("selectedRecipe").innerHTML = "لا توجد وصفة مطابقة 😢";
@@ -104,4 +95,31 @@ function getRandomRecipe() {
     document.getElementById("selectedRecipe").innerHTML = recipeHTML;
 }
 
-window.onload = updateIngredientSuggestions;
+// حفظ اسم المستخدم والإيموجي والثيم
+function saveUserSettings() {
+    const userName = document.getElementById("userName").value.trim();
+    const theme = document.getElementById("themeSelector").value;
+    if(userName) localStorage.setItem("userName", userName);
+    localStorage.setItem("theme", theme);
+    applyUserSettings();
+}
+
+// تطبيق الإعدادات عند تحميل الصفحة
+function applyUserSettings() {
+    const storedName = localStorage.getItem("userName");
+    if(storedName) {
+        document.getElementById("welcomeTitle").innerText = storedName;
+        document.getElementById("userName").value = storedName;
+    }
+
+    const theme = localStorage.getItem("theme") || "white";
+    document.getElementById("themeSelector").value = theme;
+    document.body.className = ""; // إزالة أي ثيم سابق
+    document.body.classList.add(`theme-${theme}`);
+}
+
+// عند تحميل الصفحة
+window.onload = () => {
+    updateIngredientSuggestions();
+    applyUserSettings();
+};
