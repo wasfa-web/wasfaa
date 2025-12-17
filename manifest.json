@@ -1,0 +1,8 @@
+{
+  "name": "وصفاتك العشوائية",
+  "short_name": "وصفاتي",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#e8f7fb",
+  "theme_color": "#4db6d6"
+}
