@@ -69,19 +69,29 @@ function filterSuggestions(input) {
 }
 
 function getRandomRecipe() {
-  let filtered = [...recipes];
-  const must = mustHave.value.toLowerCase();
-  const not = mustNotHave.value.toLowerCase();
-  const meal = document.getElementById("filterMeal").value;
+    let filtered = [...recipes];
+    const must = mustHave.value.toLowerCase();
+    const not = mustNotHave.value.toLowerCase();
+    const mealFilter = filterMeal.value;
 
-  if (must) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase().includes(must)));
-  if (not) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase().includes(not)));
-  if (meal) filtered = filtered.filter(r => r.meal === meal);
+    if (must) filtered = filtered.filter(r => r.ingredients.some(i => i.toLowerCase().includes(must)));
+    if (not) filtered = filtered.filter(r => !r.ingredients.some(i => i.toLowerCase().includes(not)));
+    if (mealFilter) filtered = filtered.filter(r => r.meal === mealFilter);
 
-  if (!filtered.length) {
-    selectedRecipe.innerText = "لا توجد وصفة";
-    return;
-  }
+    if (!filtered.length) {
+        selectedRecipe.innerHTML = "<p>لا توجد وصفة</p>";
+        return;
+    }
+
+    const r = filtered[Math.floor(Math.random() * filtered.length)];
+
+    selectedRecipe.innerHTML = `
+      <div class="recipe-box"><h2>${r.name}</h2></div>
+      ${r.image ? `<img src="${r.image}" alt="${r.name}">` : ""}
+      <div class="recipe-box"><p><strong>المكونات:</strong> ${r.ingredients.join(", ")}</p></div>
+      <div class="recipe-box"><p><strong>نوع الوجبة:</strong> ${r.meal || "—"}</p></div>
+    `;
+}
 
   const r = filtered[Math.floor(Math.random() * filtered.length)];
   selectedRecipe.innerHTML = `${r.name}<br>${r.ingredients.join(", ")}<br>${r.meal}<br>${r.image ? `<img src="${r.image}">` : ""}`;
