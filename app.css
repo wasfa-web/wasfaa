@@ -51,7 +51,7 @@
 body {
   margin: 0;
   font-family: Cairo, sans-serif;
-  background: #dbeafe;
+  background: var(--bg);
   color: var(--text);
 }
 
@@ -126,6 +126,11 @@ footer {
   padding: 16px;
 }
 
+@media (max-width: 480px) {
+  h1 { font-size: 20px; }
+  .card { padding: 14px; }
+}
+
 /* زر وصفاتي كبير */
 .full-width {
   display: flex;
@@ -143,9 +148,4 @@ footer {
 .full-width button {
   width: 90%;
   height: 40px;
-}
-
-@media (max-width: 480px) {
-  h1 { font-size: 20px; }
-  .card { padding: 14px; }
 }
