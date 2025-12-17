@@ -173,6 +173,16 @@ button {
   text-align: center;
   margin: 6px auto; /* يضيف تباعد جميل بين المربعات */
 }
+/* مربعات اسم الوصفة والمكونات في إضافة وصفة */
+#recipeName, #recipeIngredients {
+  border: 2px solid var(--accent); /* نفس حدود المربعات السفلى */
+  border-radius: 12px;
+  padding: 10px;
+  width: 95%; /* ضمن الإطار */
+  margin: 8px auto; /* يضعهم في المنتصف ويعطي تباعد */
+  display: block;
+  font-family: 'Cairo', sans-serif;
+}
 
 #mustHave, #mustNotHave {
   border: 2px solid var(--accent);
