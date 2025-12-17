@@ -54,7 +54,7 @@ function editRecipe(i) {
 
 function shareRecipe(i) {
   const r = recipes[i];
-  const text = `وصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`;
+  const text = `الوصفة: ${r.name}\nالمكونات: ${r.ingredients.join(", ")}\nنوع الوجبة: ${r.meal}`;
   if (navigator.share) {
     navigator.share({ title: r.name, text: text }).catch(console.error);
   } else {
