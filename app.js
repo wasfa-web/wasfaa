@@ -88,6 +88,10 @@ const mustHave = document.getElementById("mustHave");
 const mustNotHave = document.getElementById("mustNotHave");
 const filterMeal = document.getElementById("filterMeal");
 const themeSelector = document.getElementById("themeSelector");
+const recipeName = document.getElementById("recipeName");
+const recipeIngredients = document.getElementById("recipeIngredients");
+const mealType = document.getElementById("mealType");
+const recipeImage = document.getElementById("recipeImage");
 
 // ---------------------------------------------
 // تحميل الثيم من localStorage
