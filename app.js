@@ -232,19 +232,21 @@ function compressImage(file, callback) {
     const img = new Image();
     img.onload = () => {
       const canvas = document.createElement("canvas");
-      const MAX_WIDTH = 800;
-      const scale = MAX_WIDTH / img.width;
 
-      canvas.width = MAX_WIDTH;
+      const MAX_WIDTH = 800;
+      const scale = img.width > MAX_WIDTH ? MAX_WIDTH / img.width : 1;
+
+      canvas.width = img.width * scale;
       canvas.height = img.height * scale;
 
       const ctx = canvas.getContext("2d");
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-      callback(canvas.toDataURL("image/jpeg", 0.7)); // ضغط قوي
+      callback(canvas.toDataURL("image/jpeg", 0.7));
     };
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
+
 
