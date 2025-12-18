@@ -55,7 +55,6 @@
   user-select: none; /* يمنع تحديد النص عند اللمس أو الضغط العرضي */
 }
 
-}
 input, textarea { 
   border: 2px solid var(--accent); 
   border-radius: 12px; 
