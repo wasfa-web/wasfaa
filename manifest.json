@@ -1,7 +1,7 @@
 {
   "name": "وصفاتك",
   "short_name": "وصفات",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#e8f7fb",
   "theme_color": "#4db6d6",
