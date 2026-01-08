@@ -8,7 +8,7 @@ const FILES = [
   "./app.js",
   "./all_recipes.js",
   "./manifest.json",
-  "./recipe-icon.png"
+  "./icon.png"
 ];
 
 self.addEventListener("install", e => {
