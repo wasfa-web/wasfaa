@@ -1,6 +1,6 @@
 {
-  "name": "وصفاتي",
-  "short_name": "وصفاتي",
+  "name": "وصفتي",
+  "short_name": "وصفتي",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
